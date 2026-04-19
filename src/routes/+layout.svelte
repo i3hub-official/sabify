@@ -2,7 +2,6 @@
 	import './layout.css';
 	import { env } from '$env/dynamic/public';
 	import { pwaInfo } from 'virtual:pwa-info';
-	import { useRegisterSW } from 'virtual:pwa-register/svelte';
 	import { onMount } from 'svelte';
 	import { Sun, Moon } from 'lucide-svelte';
 
@@ -15,15 +14,7 @@
 
 	let { children } = $props();
 
-	// PWA
-	const { needRefresh, updateServiceWorker } = useRegisterSW({
-		onRegistered(r) {
-			console.log('[PWA] Service worker registered:', r);
-		},
-		onRegisterError(error) {
-			console.error('[PWA] Service worker registration error:', error);
-		}
-	});
+
 
 	// Theme
 	let theme: 'light' | 'dark' = $state('light');
