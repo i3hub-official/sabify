@@ -28,6 +28,7 @@
       <span>Launching across West Africa</span>
     </div>
 
+    
     <h1 class="hero-title">
       Not by might,<br />
       <em>but by Sabify.</em>
