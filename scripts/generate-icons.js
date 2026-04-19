@@ -3,7 +3,6 @@
 
 import sharp from 'sharp';
 import fs from 'fs';
-import path from 'path';
 
 const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">

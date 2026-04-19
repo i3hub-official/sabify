@@ -545,190 +545,224 @@
       </div>
     {/if}
 
-    <!-- ══════════════════════════════════════
-         STEP 2: Identity
-    ══════════════════════════════════════ -->
-    {#if currentStep === 2}
-      <div class="step-content">
+   <!-- ══════════════════════════════════════
+     STEP 2: Identity
+══════════════════════════════════════ -->
+{#if currentStep === 2}
+  <div class="step-content">
 
-        <!-- University banner -->
-        {#if selectedUniversity}
-          <div class="uni-banner">
-            <div class="uni-banner-logo">
-              {#if !logoError}
-                <img src={getLogoPath(selectedUniversity)} alt="" on:error={() => (logoError = true)} />
-              {:else}
-                <span class="uni-initials sm">{selectedUniversity.acronym.slice(0, 2)}</span>
-              {/if}
-            </div>
-            <span class="uni-banner-name">{selectedUniversity.name}</span>
-          </div>
-        {/if}
-
-        {#if receiptFetched}
-          <div class="prefill-notice">
-            <Zap size={13} />
-            <span>Fields marked 🔒 were filled from your receipt and cannot be edited.</span>
-            <button
-              type="button"
-              class="re-scan-link"
-              on:click={() => { receiptFetched = false; clearPrefilled(); currentStep = 1; }}
-            >
-              <RefreshCw size={12} /> Re-scan
-            </button>
-          </div>
-        {/if}
-
-        <div class="form-group">
-          <label class="form-label">
-            JAMB Registration number
-            {#if receiptFetched}<span class="lock-icon">🔒</span>{/if}
-          </label>
-          <div class="input-wrapper">
-            <Briefcase size={17} class="input-icon" />
-            <input
-              type="text"
-              bind:value={jambregNo}
-              placeholder="0123456789876AB"
-              class="form-input"
-              class:prefilled={receiptFetched}
-              readonly={receiptFetched}
-            />
-          </div>
+    <!-- University banner -->
+    {#if selectedUniversity}
+      <div class="uni-banner">
+        <div class="uni-banner-logo">
+          {#if !logoError}
+            <img src={getLogoPath(selectedUniversity)} alt="" on:error={() => (logoError = true)} />
+          {:else}
+            <span class="uni-initials sm">{selectedUniversity.acronym.slice(0, 2)}</span>
+          {/if}
         </div>
-
-        <div class="form-group">
-          <label class="form-label">
-            Matric / Registration number
-            {#if receiptFetched}<span class="lock-icon">🔒</span>{/if}
-          </label>
-          <div class="input-wrapper">
-            <Briefcase size={17} class="input-icon" />
-            <input
-              type="text"
-              bind:value={matricNumber}
-              placeholder="2021/249011"
-              class="form-input"
-              class:prefilled={receiptFetched}
-              readonly={receiptFetched}
-            />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">
-              Surname {#if receiptFetched}<span class="lock-icon">🔒</span>{/if}
-            </label>
-            <div class="input-wrapper">
-              <User size={17} class="input-icon" />
-              <input
-                type="text"
-                bind:value={surname}
-                placeholder="Adebayo"
-                class="form-input"
-                class:prefilled={receiptFetched}
-                readonly={receiptFetched}
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">
-              First name {#if receiptFetched}<span class="lock-icon">🔒</span>{/if}
-            </label>
-            <div class="input-wrapper">
-              <User size={17} class="input-icon" />
-              <input
-                type="text"
-                bind:value={firstName}
-                placeholder="Oluwaseun"
-                class="form-input"
-                class:prefilled={receiptFetched}
-                readonly={receiptFetched}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">
-            Other name(s)
-            {#if receiptFetched}<span class="lock-icon">🔒</span>{:else}<span class="optional">optional</span>{/if}
-          </label>
-          <div class="input-wrapper">
-            <User size={17} class="input-icon" />
-            <input
-              type="text"
-              bind:value={otherName}
-              placeholder="Middle name"
-              class="form-input"
-              class:prefilled={receiptFetched}
-              readonly={receiptFetched}
-            />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">
-              Faculty / College {#if receiptFetched}<span class="lock-icon">🔒</span>{/if}
-            </label>
-            <div class="input-wrapper">
-              <Building2 size={17} class="input-icon" />
-              <input
-                type="text"
-                bind:value={faculty}
-                placeholder="Engineering"
-                class="form-input"
-                class:prefilled={receiptFetched}
-                readonly={receiptFetched}
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">
-              Department {#if receiptFetched}<span class="lock-icon">🔒</span>{/if}
-            </label>
-            <div class="input-wrapper">
-              <BookOpen size={17} class="input-icon" />
-              <input
-                type="text"
-                bind:value={department}
-                placeholder="Computer Science"
-                class="form-input"
-                class:prefilled={receiptFetched}
-                readonly={receiptFetched}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Phone number <span class="optional">optional</span></label>
-          <div class="input-wrapper">
-            <Phone size={17} class="input-icon" />
-            <input type="tel" bind:value={phone} placeholder="+234 801 234 5678" class="form-input" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Email address</label>
-          <div class="input-wrapper">
-            <Mail size={17} class="input-icon" />
-            <input type="email" bind:value={email} placeholder="you@university.edu.ng" class="form-input" />
-          </div>
-        </div>
-
-        <div class="button-group">
-          <button type="button" class="back-btn" on:click={prevStep}>
-            <ChevronLeft size={17} /> Back
-          </button>
-          <button type="button" class="next-btn" on:click={nextStep} disabled={isLoading}>
-            Continue <ChevronRight size={17} />
-          </button>
-        </div>
+        <span class="uni-banner-name">{selectedUniversity.name}</span>
       </div>
     {/if}
+
+    {#if receiptFetched}
+      <div class="prefill-notice">
+        <Zap size={13} />
+        <span>Fields marked with the lock icon were filled from your receipt and cannot be edited.</span>
+        <button
+          type="button"
+          class="re-scan-link"
+          on:click={() => { receiptFetched = false; clearPrefilled(); currentStep = 1; }}
+        >
+          <RefreshCw size={12} /> Re-scan
+        </button>
+      </div>
+    {/if}
+
+    <!-- JAMB Registration Number -->
+    <div class="form-group">
+      <label class="form-label">
+        JAMB Registration Number
+        {#if receiptFetched}
+          <Lock size={14} class="lock-icon" />
+        {/if}
+      </label>
+
+      <div class="input-wrapper">
+        <Briefcase size={17} class="input-icon" />
+        <input
+          type="text"
+          bind:value={jambregNo}
+          placeholder="202551405692CF"
+          class="form-input"
+          class:prefilled={receiptFetched}
+          readonly={receiptFetched}
+          maxlength="15"
+        />
+      </div>
+    </div>
+
+    <!-- Matric Number -->
+    <div class="form-group">
+      <label class="form-label">
+        Matric / Registration number
+        {#if receiptFetched}
+          <Lock size={14} class="lock-icon" />
+        {/if}
+      </label>
+
+      <div class="input-wrapper">
+        <Briefcase size={17} class="input-icon" />
+        <input
+          type="text"
+          bind:value={matricNumber}
+          placeholder="2021/249011"
+          class="form-input"
+          class:prefilled={receiptFetched}
+          readonly={receiptFetched}
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">
+          Surname
+          {#if receiptFetched}
+            <Lock size={14} class="lock-icon" />
+          {/if}
+        </label>
+
+        <div class="input-wrapper">
+          <User size={17} class="input-icon" />
+          <input
+            type="text"
+            bind:value={surname}
+            placeholder="Adebayo"
+            class="form-input"
+            class:prefilled={receiptFetched}
+            readonly={receiptFetched}
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          First name
+          {#if receiptFetched}
+            <Lock size={14} class="lock-icon" />
+          {/if}
+        </label>
+
+        <div class="input-wrapper">
+          <User size={17} class="input-icon" />
+          <input
+            type="text"
+            bind:value={firstName}
+            placeholder="Oluwaseun"
+            class="form-input"
+            class:prefilled={receiptFetched}
+            readonly={receiptFetched}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">
+        Other name(s)
+        {#if receiptFetched}
+          <Lock size={14} class="lock-icon" />
+        {:else}
+          <span class="optional">optional</span>
+        {/if}
+      </label>
+
+      <div class="input-wrapper">
+        <User size={17} class="input-icon" />
+        <input
+          type="text"
+          bind:value={otherName}
+          placeholder="Middle name"
+          class="form-input"
+          class:prefilled={receiptFetched}
+          readonly={receiptFetched}
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">
+          Faculty / College
+          {#if receiptFetched}
+            <Lock size={14} class="lock-icon" />
+          {/if}
+        </label>
+
+        <div class="input-wrapper">
+          <Building2 size={17} class="input-icon" />
+          <input
+            type="text"
+            bind:value={faculty}
+            placeholder="Engineering"
+            class="form-input"
+            class:prefilled={receiptFetched}
+            readonly={receiptFetched}
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Department
+          {#if receiptFetched}
+            <Lock size={14} class="lock-icon" />
+          {/if}
+        </label>
+
+        <div class="input-wrapper">
+          <BookOpen size={17} class="input-icon" />
+          <input
+            type="text"
+            bind:value={department}
+            placeholder="Computer Science"
+            class="form-input"
+            class:prefilled={receiptFetched}
+            readonly={receiptFetched}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Phone number <span class="optional">optional</span></label>
+      <div class="input-wrapper">
+        <Phone size={17} class="input-icon" />
+        <input type="tel" bind:value={phone} placeholder="+234 801 234 5678" class="form-input" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <div class="input-wrapper">
+        <Mail size={17} class="input-icon" />
+        <input type="email" bind:value={email} placeholder="you@university.edu.ng" class="form-input" />
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="back-btn" on:click={prevStep}>
+        <ChevronLeft size={17} /> Back
+      </button>
+
+      <button type="button" class="next-btn" on:click={nextStep} disabled={isLoading}>
+        Continue <ChevronRight size={17} />
+      </button>
+    </div>
+
+  </div>
+{/if}
 
     <!-- ══════════════════════════════════════
          STEP 3: Security
@@ -785,13 +819,13 @@
       </div>
     {/if}
 
-    <div class="divider">
+    <!-- <div class="divider">
       <span class="divider-line"></span>
       <span class="divider-text">or</span>
       <span class="divider-line"></span>
-    </div>
+    </div> -->
 
-    <button class="google-btn" type="button" disabled={isLoading}>
+    <!-- <button class="google-btn" type="button" disabled={isLoading}>
       <svg viewBox="0 0 24 24" width="17" height="17">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -799,7 +833,7 @@
         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
       </svg>
       Continue with Google
-    </button>
+    </button> -->
 
     <div class="toggle-mode">
       <span class="toggle-text">Already have an account?</span>
