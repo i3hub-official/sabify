@@ -481,7 +481,7 @@
             {#if showWebcam}
               <div class="webcam-box">
                 <div class="webcam-frame">
-                  <!-- svelte-ignore a11y-media-has-caption -->
+                  <!-- a11y-media-has-caption -->
                   <video bind:this={videoEl} playsinline autoplay class="webcam-video"></video>
                   <div class="scan-reticle"></div>
                 </div>
