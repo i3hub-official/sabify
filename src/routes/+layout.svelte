@@ -1,7 +1,6 @@
 <script lang="ts">
 	import './layout.css';
 	import { env } from '$env/dynamic/public';
-	import { pwaInfo } from 'virtual:pwa-info';
 	import { onMount } from 'svelte';
 	import { Sun, Moon } from 'lucide-svelte';
 
@@ -64,11 +63,7 @@
 	<link rel="icon" href="/favicon.svg" />
 	<meta name="theme-color" content="#7C3AED" />
 
-	{#if pwaInfo?.webManifest?.href}
-		<link rel="manifest" href={pwaInfo.webManifest.href} />
-	{/if}
-
-	<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+		<link rel="apple-touch-icon" href="/icons/icon-192.png" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<meta name="apple-mobile-web-app-title" content="Sabify" />
@@ -81,13 +76,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 </svelte:head>
 
-<!-- PWA update toast -->
-<!-- {#if $needRefresh}
-	<div class="pwa-toast">
-		<span>A new version of Sabify is available.</span>
-		<button on:click={() => updateServiceWorker(true)}>Update now</button>
-	</div>
-{/if} -->
 
 <!-- Full Edge-to-Edge Navigation -->
 <nav class="nav">
