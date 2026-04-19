@@ -9,7 +9,7 @@
   import {
     Mail, Lock, User, ArrowRight, Eye, EyeOff,
     Briefcase, School, UserPlus, Check, X,
-    ChevronRight, ChevronLeft, Phone, BookOpen,
+    Home, ChevronLeft, Phone, BookOpen,
     Building2, Zap, QrCode, Camera, Upload, RefreshCw,
     Sparkles, ShieldCheck
   } from 'lucide-svelte';
@@ -322,6 +322,8 @@
 <svelte:head>
   <title>Sign up — Sabify</title>
   <meta name="description" content="Create your Sabify account. Join the future of campus life." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <svelte:window on:click={(e) => {
@@ -332,832 +334,689 @@
 <div class="signup-page">
 
   <!-- ── Left brand panel ─────────────────────────────────────────── -->
-  <aside class="brand-panel">
-    <div class="brand-inner">
-
-      <a href="/" class="brand-logo">
-        <div class="logo-mark">
+  <aside class="si-panel">
+    <div class="si-panel-inner">
+      <a href="/" class="si-logo-link">
+        <div class="si-logo-mark">
           <svg viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M7 10.5L9.5 13L13.5 8"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="brand-name">Sabify</span>
+        <span class="si-wordmark">Sabify</span>
       </a>
-
-      <div class="brand-hero">
-        <div class="brand-badge">
-          <Sparkles size={14} />
-          <span>Join the movement</span>
-        </div>
-        <h2 class="brand-headline">
-          Your campus life,<br />
-          <em>reimagined.</em>
-        </h2>
-        <p class="brand-desc">
-          Past questions, dues, safety, events — everything a Nigerian student needs in one place.
-        </p>
+      <div class="si-panel-hero">
+        <div class="si-panel-badge"><Sparkles size={13} /><span>Join the movement</span></div>
+        <h2 class="si-panel-headline">Your campus,<br/><em>reimagined.</em></h2>
+        <p class="si-panel-desc">Past questions, dues, safety alerts — one place for every Nigerian student.</p>
       </div>
-
-      <div class="brand-features">
-        <div class="feature-item">
-          <BookOpen size={18} />
-          <div>
-            <strong>Verified Past Questions</strong>
-            <span>From every department</span>
-          </div>
+      <div class="si-features">
+        <div class="si-feature-card">
+          <div class="si-feature-icon"><BookOpen size={17} /></div>
+          <div><strong>Verified Past Questions</strong><span>From every department</span></div>
         </div>
-        <div class="feature-item">
-          <Zap size={18} />
-          <div>
-            <strong>Instant Dues Payment</strong>
-            <span>With digital receipts</span>
-          </div>
+        <div class="si-feature-card">
+          <div class="si-feature-icon"><Zap size={17} /></div>
+          <div><strong>Instant Dues Payment</strong><span>With digital receipts</span></div>
         </div>
-        <div class="feature-item">
-          <ShieldCheck size={18} />
-          <div>
-            <strong>Campus Shield</strong>
-            <span>Real-time safety alerts</span>
-          </div>
+        <div class="si-feature-card">
+          <div class="si-feature-icon"><ShieldCheck size={17} /></div>
+          <div><strong>Campus Shield</strong><span>Real-time safety alerts</span></div>
         </div>
       </div>
-
-      <div class="brand-footer">
-        <p>Trusted by students in over 40 Nigerian universities</p>
+      <div class="si-panel-footer">
+        <div class="si-avatars">
+          <div class="si-avatar" style="background:#a78bfa"></div>
+          <div class="si-avatar" style="background:#7c3aed"></div>
+          <div class="si-avatar" style="background:#6d28d9"></div>
+          <div class="si-avatar" style="background:#5b21b6"></div>
+          <div class="si-avatar-count">+8k</div>
+        </div>
+        <p>Trusted by students across Nigeria</p>
       </div>
-
     </div>
+    <div class="si-panel-glow"></div>
   </aside>
 
   <!-- ── Right form side ──────────────────────────────────────────── -->
-  <div class="form-side">
-    <div class="auth-card">
+  <div class="si-main">
+    <div class="si-form-shell">
 
-      <!-- Logo (mobile only) -->
-      <div class="mobile-logo">
-        <div class="logo-mark sm">
+      <a href="/" class="si-back-home">
+        <ChevronLeft size={17} /><Home size={13} /><span>Back to Home</span>
+      </a>
+
+      <div class="si-mobile-brand">
+        <div class="si-logo-mark sm">
           <svg viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M7 10.5L9.5 13L13.5 8"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="logo-text">Sabify</span>
+        <span class="si-wordmark inline">Sabify</span>
       </div>
 
-      <!-- Header -->
-      <div class="auth-header">
-        <h1 class="auth-title">Create your account</h1>
-        <p class="auth-subtitle">Join the future of campus life</p>
+      <div class="si-form-header">
+        <h1 class="si-form-title">Create your account</h1>
+        <p class="si-form-subtitle">Join the future of campus life</p>
       </div>
 
-      <!-- Stepper -->
-      <div class="stepper">
-        <div class="step" class:active={currentStep >= 1} class:done={currentStep > 1}>
-          <div class="step-number">{#if currentStep > 1}<Check size={14} />{:else}1{/if}</div>
-          <div class="step-label">University</div>
-        </div>
-        <div class="step-line" class:active={currentStep >= 2}></div>
-        <div class="step" class:active={currentStep >= 2} class:done={currentStep > 2}>
-          <div class="step-number">{#if currentStep > 2}<Check size={14} />{:else}2{/if}</div>
-          <div class="step-label">Identity</div>
-        </div>
-        <div class="step-line" class:active={currentStep >= 3}></div>
-        <div class="step" class:active={currentStep >= 3}>
-          <div class="step-number">3</div>
-          <div class="step-label">Security</div>
-        </div>
-      </div>
+      <div class="si-card">
 
-      <!-- Messages -->
-      {#if errorMessage}
-        <div class="message error"><X size={15} /><span>{errorMessage}</span></div>
-      {/if}
-      {#if successMessage}
-        <div class="message success"><Check size={15} /><span>{successMessage}</span></div>
-      {/if}
+        <!-- Stepper -->
+        <div class="si-steps">
+          <div class="si-step-dot" class:active={currentStep >= 1} class:done={currentStep > 1}></div>
+          <div class="si-step-line" class:filled={currentStep >= 2}></div>
+          <div class="si-step-dot" class:active={currentStep >= 2} class:done={currentStep > 2}></div>
+          <div class="si-step-line" class:filled={currentStep >= 3}></div>
+          <div class="si-step-dot" class:active={currentStep >= 3}></div>
+        </div>
+        <div class="si-step-labels">
+          <span class="si-step-label" class:active={currentStep >= 1}>University</span>
+          <span class="si-step-label" class:active={currentStep >= 2}>Identity</span>
+          <span class="si-step-label" class:active={currentStep >= 3}>Security</span>
+        </div>
 
-      <!-- ══ STEP 1: University ══ -->
-      {#if currentStep === 1}
-        <div class="step-content">
+        {#if errorMessage}
+          <div class="si-alert-error"><AlertCircle size={17} /><span>{errorMessage}</span></div>
+        {/if}
+        {#if successMessage}
+          <div class="si-alert-success"><Check size={17} /><span>{successMessage}</span></div>
+        {/if}
 
-          <div class="form-group">
-            <label class="form-label">University</label>
-            <div class="university-search">
-              <div class="input-wrapper">
-                <School size={17} class="input-icon" />
-                <input
-                  type="text"
-                  bind:value={searchQuery}
-                  on:focus={() => (showDropdown = true)}
-                  on:input={() => (showDropdown = true)}
-                  placeholder="Search for your university…"
-                  class="form-input"
-                  autocomplete="off"
-                />
-                {#if selectedUniversity}
-                  <button type="button" class="clear-btn" on:click={clearUniversity}><X size={15} /></button>
-                {/if}
-              </div>
-              {#if showDropdown && filteredUniversities.length > 0}
-                <div class="dropdown">
-                  {#each filteredUniversities as uni}
-                    <button type="button" class="dropdown-item" on:click={() => selectUniversity(uni)}>
-                      <span class="dropdown-acronym">{uni.acronym}</span>
-                      <span class="dropdown-name">{uni.name}</span>
-                    </button>
-                  {/each}
-                </div>
-              {/if}
+        <!-- ══ STEP 1: University ══ -->
+        {#if currentStep === 1}
+          <div class="si-step-body">
+            <div class="si-welcome-msg">
+              <School size={19} />
+              <div><strong>Find your university</strong><span>We support active institutions across Nigeria</span></div>
             </div>
-          </div>
 
-          {#if selectedUniversity}
-            <div class="uni-card">
-              <div class="uni-card-logo">
-                {#if !logoError}
-                  <img src={getLogoPath(selectedUniversity)} alt={selectedUniversity.acronym} on:error={() => (logoError = true)} />
-                {:else}
-                  <span class="uni-initials">{selectedUniversity.acronym.slice(0, 2)}</span>
-                {/if}
-              </div>
-              <div class="uni-card-info">
-                <span class="uni-card-name">{selectedUniversity.name}</span>
-                <span class="uni-card-acronym">{selectedUniversity.acronym}</span>
-              </div>
-              <Check size={16} class="uni-card-check" />
-            </div>
-          {/if}
-
-          {#if isMouau}
-            <div class="mouau-section">
-              <div class="mouau-badge"><Zap size={12} /> MOUAU Auto-fill</div>
-
-              <div class="form-group">
-                <label class="form-label">
-                  Matric number
-                  <span class="required">enter this first</span>
-                </label>
-                <div class="input-wrapper">
-                  <Briefcase size={17} class="input-icon" />
+            <div class="si-field">
+              <label class="si-label" for="university">University <span class="si-req">*</span></label>
+              <div class="university-search">
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><School size={15} /></span>
                   <input
                     type="text"
-                    bind:value={mouauMatric}
-                    on:input={onMatricInput}
-                    placeholder="e.g. 2021/249011"
-                    class="form-input"
+                    id="university"
+                    bind:value={searchQuery}
+                    on:focus={() => (showDropdown = true)}
+                    on:input={() => (showDropdown = true)}
+                    placeholder="Search for your university…"
+                    class="si-input"
+                    autocomplete="off"
                   />
-                </div>
-              </div>
-
-              <div class="scan-block" class:locked={!mouauMatric.trim()}>
-                <div class="scan-options-label">
-                  Scan school fee QR code
-                  {#if !mouauMatric.trim()}
-                    <span class="scan-lock-hint">— enter matric number above first</span>
+                  {#if selectedUniversity}
+                    <button type="button" class="si-clear-btn" on:click={clearUniversity}><X size={15} /></button>
                   {/if}
                 </div>
-                <div class="scan-btns">
-                  <button type="button" class="scan-btn" on:click={startWebcam} disabled={!mouauMatric.trim()}>
-                    <Camera size={15} /> Live camera
-                  </button>
-                  <label class="scan-btn" class:disabled={!mouauMatric.trim()}>
-                    <Upload size={15} /> Upload image
-                    <input type="file" accept="image/*" class="sr-only" disabled={!mouauMatric.trim()} on:change={handleQrUpload} />
-                  </label>
-                </div>
-              </div>
-
-              {#if camError}
-                <p class="cam-error">{camError}</p>
-              {/if}
-
-              {#if showWebcam}
-                <div class="webcam-box">
-                  <div class="webcam-frame">
-                    <!-- svelte-ignore a11y-media-has-caption -->
-                    <video bind:this={videoEl} playsinline autoplay class="webcam-video"></video>
-                    <div class="scan-reticle"></div>
-                  </div>
-                  <p class="webcam-hint">Point at the QR code on your school fee receipt</p>
-                  <button type="button" class="stop-cam-btn" on:click={stopWebcam}>
-                    <X size={14} /> Cancel
-                  </button>
-                </div>
-              {/if}
-
-              <div class="form-group">
-                <label class="form-label">Or enter receipt ref number manually</label>
-                <div class="input-wrapper">
-                  <QrCode size={17} class="input-icon" />
-                  <input
-                    type="text"
-                    bind:value={refNumber}
-                    on:input={onRefInput}
-                    placeholder="e.g. 8987874736744"
-                    class="form-input ref-input"
-                    disabled={!mouauMatric.trim()}
-                  />
-                  <button
-                    type="button"
-                    class="inline-fetch-btn"
-                    on:click={fetchReceipt}
-                    disabled={qrLoading || !refNumber.trim() || !mouauMatric.trim()}
-                  >
-                    {#if qrLoading}<span class="mini-spinner"></span>{:else}Fetch{/if}
-                  </button>
-                </div>
-              </div>
-
-              {#if receiptData}
-                <div class="receipt-result">
-                  <div class="receipt-label"><Check size={12} /> Receipt verified — fields auto-filled</div>
-                  <div class="receipt-rows">
-                    {#each Object.entries(receiptData) as [key, val]}
-                      {#if val}
-                        <div class="receipt-row">
-                          <span class="receipt-key">{key}</span>
-                          <span class="receipt-val">{val}</span>
-                        </div>
-                      {/if}
+                {#if showDropdown && filteredUniversities.length > 0}
+                  <div class="si-dropdown">
+                    {#each filteredUniversities as uni}
+                      <button type="button" class="si-dropdown-item" on:click={() => selectUniversity(uni)}>
+                        <span class="si-dropdown-acronym">{uni.acronym}</span>
+                        <span class="si-dropdown-name">{uni.name}</span>
+                        {#if uni.isActive}<span class="si-active-tag">Active</span>{/if}
+                      </button>
                     {/each}
                   </div>
-                </div>
-              {/if}
-            </div>
-          {/if}
-
-          <button type="button" class="next-btn" on:click={nextStep} disabled={isLoading}>
-            Continue <ChevronRight size={17} />
-          </button>
-        </div>
-      {/if}
-
-      <!-- ══ STEP 2: Identity ══ -->
-      {#if currentStep === 2}
-        <div class="step-content">
-
-          {#if selectedUniversity}
-            <div class="uni-banner">
-              <div class="uni-banner-logo">
-                {#if !logoError}
-                  <img src={getLogoPath(selectedUniversity)} alt="" on:error={() => (logoError = true)} />
-                {:else}
-                  <span class="uni-initials sm">{selectedUniversity.acronym.slice(0, 2)}</span>
                 {/if}
               </div>
-              <span class="uni-banner-name">{selectedUniversity.name}</span>
             </div>
-          {/if}
 
-          {#if receiptFetched}
-            <div class="prefill-notice">
-              <Zap size={13} />
-              <span>Fields marked with the lock icon were filled from your receipt and cannot be edited.</span>
-              <button
-                type="button"
-                class="re-scan-link"
-                on:click={() => { receiptFetched = false; clearPrefilled(); currentStep = 1; }}
-              >
-                <RefreshCw size={12} /> Re-scan
+            {#if selectedUniversity}
+              <div class="si-uni-card">
+                <div class="si-uni-card-logo">
+                  {#if !logoError}
+                    <img src={getLogoPath(selectedUniversity)} alt={selectedUniversity.acronym} on:error={() => (logoError = true)} />
+                  {:else}
+                    <span class="si-uni-initials">{selectedUniversity.acronym.slice(0, 2)}</span>
+                  {/if}
+                </div>
+                <div class="si-uni-card-info">
+                  <span class="si-uni-card-name">{selectedUniversity.name}</span>
+                  <div class="si-uni-card-meta">
+                    <span class="si-uni-card-acronym">{selectedUniversity.acronym}</span>
+                    {#if selectedUniversity.isActive}<span class="si-active-tag si-active-tag--card">Active</span>{/if}
+                  </div>
+                </div>
+                <Check size={18} class="si-uni-card-check" />
+              </div>
+            {/if}
+
+            {#if isMouau}
+              <div class="si-mouau-section">
+                <div class="si-mouau-badge"><Zap size={12} /> MOUAU Auto-fill</div>
+
+                <div class="si-field">
+                  <label class="si-label">
+                    Matric number
+                    <span class="si-req-hint">enter this first</span>
+                  </label>
+                  <div class="si-input-wrap">
+                    <span class="si-input-icon"><Briefcase size={15} /></span>
+                    <input
+                      type="text"
+                      bind:value={mouauMatric}
+                      on:input={onMatricInput}
+                      placeholder="e.g. 2021/249011"
+                      class="si-input"
+                    />
+                  </div>
+                </div>
+
+                <div class="si-scan-block" class:si-scan-block--locked={!mouauMatric.trim()}>
+                  <div class="si-scan-options-label">
+                    Scan school fee QR code
+                    {#if !mouauMatric.trim()}
+                      <span class="si-scan-lock-hint">— enter matric number above first</span>
+                    {/if}
+                  </div>
+                  <div class="si-scan-btns">
+                    <button type="button" class="si-scan-btn" on:click={startWebcam} disabled={!mouauMatric.trim()}>
+                      <Camera size={15} /> Live camera
+                    </button>
+                    <label class="si-scan-btn" class:disabled={!mouauMatric.trim()}>
+                      <Upload size={15} /> Upload image
+                      <input type="file" accept="image/*" class="sr-only" disabled={!mouauMatric.trim()} on:change={handleQrUpload} />
+                    </label>
+                  </div>
+                </div>
+
+                {#if camError}
+                  <p class="si-cam-error">{camError}</p>
+                {/if}
+
+                {#if showWebcam}
+                  <div class="si-webcam-box">
+                    <div class="si-webcam-frame">
+                      <!-- svelte-ignore a11y-media-has-caption -->
+                      <video bind:this={videoEl} playsinline autoplay class="si-webcam-video"></video>
+                      <div class="si-scan-reticle"></div>
+                    </div>
+                    <p class="si-webcam-hint">Point at the QR code on your school fee receipt</p>
+                    <button type="button" class="si-stop-cam-btn" on:click={stopWebcam}>
+                      <X size={14} /> Cancel
+                    </button>
+                  </div>
+                {/if}
+
+                <div class="si-field">
+                  <label class="si-label">Or enter receipt ref number manually</label>
+                  <div class="si-input-wrap">
+                    <span class="si-input-icon"><QrCode size={15} /></span>
+                    <input
+                      type="text"
+                      bind:value={refNumber}
+                      on:input={onRefInput}
+                      placeholder="e.g. 8987874736744"
+                      class="si-input si-input--ref"
+                      disabled={!mouauMatric.trim()}
+                    />
+                    <button
+                      type="button"
+                      class="si-inline-fetch-btn"
+                      on:click={fetchReceipt}
+                      disabled={qrLoading || !refNumber.trim() || !mouauMatric.trim()}
+                    >
+                      {#if qrLoading}<span class="si-mini-spinner"></span>{:else}Fetch{/if}
+                    </button>
+                  </div>
+                </div>
+
+                {#if receiptData}
+                  <div class="si-receipt-result">
+                    <div class="si-receipt-label"><Check size={12} /> Receipt verified — fields auto-filled</div>
+                    <div class="si-receipt-rows">
+                      {#each Object.entries(receiptData) as [key, val]}
+                        {#if val}
+                          <div class="si-receipt-row">
+                            <span class="si-receipt-key">{key}</span>
+                            <span class="si-receipt-val">{val}</span>
+                          </div>
+                        {/if}
+                      {/each}
+                    </div>
+                  </div>
+                {/if}
+              </div>
+            {/if}
+
+            <button type="button" class="si-btn-next si-btn-next--full" on:click={nextStep} disabled={isLoading}>
+              Continue <ArrowRight size={15} />
+            </button>
+          </div>
+        {/if}
+
+        <!-- ══ STEP 2: Identity ══ -->
+        {#if currentStep === 2}
+          <div class="si-step-body">
+            <div class="si-welcome-msg">
+              <User size={19} />
+              <div><strong>Your academic identity</strong><span>Help us verify your student status</span></div>
+            </div>
+
+            {#if selectedUniversity}
+              <div class="si-uni-banner">
+                <div class="si-uni-banner-logo">
+                  {#if !logoError}
+                    <img src={getLogoPath(selectedUniversity)} alt="" on:error={() => (logoError = true)} />
+                  {:else}
+                    <span class="si-uni-initials sm">{selectedUniversity.acronym.slice(0, 2)}</span>
+                  {/if}
+                </div>
+                <div class="si-uni-banner-info">
+                  <span class="si-uni-banner-name">{selectedUniversity.name}</span>
+                  <span class="si-uni-banner-acronym">{selectedUniversity.acronym}</span>
+                </div>
+              </div>
+            {/if}
+
+            {#if receiptFetched}
+              <div class="si-prefill-notice">
+                <Zap size={13} />
+                <span>Fields marked with the lock icon were filled from your receipt and cannot be edited.</span>
+                <button type="button" class="si-rescan-link" on:click={() => { receiptFetched = false; clearPrefilled(); currentStep = 1; }}>
+                  <RefreshCw size={12} /> Re-scan
+                </button>
+              </div>
+            {/if}
+
+            <div class="si-field">
+              <label class="si-label">
+                JAMB Registration Number
+                {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{/if}
+              </label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><Briefcase size={15} /></span>
+                <input type="text" bind:value={jambregNo} placeholder="202551405692CF"
+                  class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} maxlength="15" />
+              </div>
+            </div>
+
+            <div class="si-field">
+              <label class="si-label">
+                Matric / Registration number
+                {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{/if}
+              </label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><Briefcase size={15} /></span>
+                <input type="text" bind:value={matricNumber} placeholder="2021/249011"
+                  class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} />
+              </div>
+            </div>
+
+            <div class="si-form-row">
+              <div class="si-field">
+                <label class="si-label">
+                  Surname
+                  {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{/if}
+                </label>
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><User size={15} /></span>
+                  <input type="text" bind:value={surname} placeholder="Adebayo"
+                    class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} />
+                </div>
+              </div>
+              <div class="si-field">
+                <label class="si-label">
+                  First name
+                  {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{/if}
+                </label>
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><User size={15} /></span>
+                  <input type="text" bind:value={firstName} placeholder="Oluwaseun"
+                    class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} />
+                </div>
+              </div>
+            </div>
+
+            <div class="si-field">
+              <label class="si-label">
+                Other name(s)
+                {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{:else}<span class="si-optional">optional</span>{/if}
+              </label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><User size={15} /></span>
+                <input type="text" bind:value={otherName} placeholder="Middle name"
+                  class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} />
+              </div>
+            </div>
+
+            <div class="si-form-row">
+              <div class="si-field">
+                <label class="si-label">
+                  Faculty / College
+                  {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{/if}
+                </label>
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><Building2 size={15} /></span>
+                  <input type="text" bind:value={faculty} placeholder="Engineering"
+                    class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} />
+                </div>
+              </div>
+              <div class="si-field">
+                <label class="si-label">
+                  Department
+                  {#if receiptFetched}<Lock size={14} class="si-lock-icon" />{/if}
+                </label>
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><BookOpen size={15} /></span>
+                  <input type="text" bind:value={department} placeholder="Computer Science"
+                    class="si-input" class:si-input--prefilled={receiptFetched} readonly={receiptFetched} />
+                </div>
+              </div>
+            </div>
+
+            <div class="si-field">
+              <label class="si-label">Phone number <span class="si-optional">optional</span></label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><Phone size={15} /></span>
+                <input type="tel" bind:value={phone} placeholder="+234 801 234 5678" class="si-input" />
+              </div>
+            </div>
+
+            <div class="si-field">
+              <label class="si-label">Email address <span class="si-req">*</span></label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><Mail size={15} /></span>
+                <input type="email" bind:value={email} placeholder="you@university.edu.ng" class="si-input" />
+              </div>
+            </div>
+
+            <div class="si-actions">
+              <button type="button" class="si-btn-back" on:click={prevStep}>
+                <ChevronLeft size={15} /> Back
+              </button>
+              <button type="button" class="si-btn-next" on:click={nextStep} disabled={isLoading}>
+                Continue <ArrowRight size={15} />
               </button>
             </div>
-          {/if}
-
-          <div class="form-group">
-            <label class="form-label">
-              JAMB Registration Number
-              {#if receiptFetched}<Lock size={14} class="lock-icon" />{/if}
-            </label>
-            <div class="input-wrapper">
-              <Briefcase size={17} class="input-icon" />
-              <input type="text" bind:value={jambregNo} placeholder="202551405692CF"
-                class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} maxlength="15" />
-            </div>
           </div>
+        {/if}
 
-          <div class="form-group">
-            <label class="form-label">
-              Matric / Registration number
-              {#if receiptFetched}<Lock size={14} class="lock-icon" />{/if}
-            </label>
-            <div class="input-wrapper">
-              <Briefcase size={17} class="input-icon" />
-              <input type="text" bind:value={matricNumber} placeholder="2021/249011"
-                class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} />
+        <!-- ══ STEP 3: Security ══ -->
+        {#if currentStep === 3}
+          <div class="si-step-body">
+            <div class="si-welcome-msg">
+              <ShieldCheck size={19} />
+              <div><strong>Secure your account</strong><span>Create a strong password</span></div>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">
-                Surname
-                {#if receiptFetched}<Lock size={14} class="lock-icon" />{/if}
-              </label>
-              <div class="input-wrapper">
-                <User size={17} class="input-icon" />
-                <input type="text" bind:value={surname} placeholder="Adebayo"
-                  class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} />
+            <div class="si-field">
+              <label class="si-label" for="password">Password <span class="si-req">*</span></label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><Lock size={15} /></span>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  bind:value={password}
+                  placeholder="Create a strong password"
+                  class="si-input si-input--toggle"
+                  disabled={isLoading}
+                />
+                <button type="button" class="si-eye-btn" on:click={() => (showPassword = !showPassword)}>
+                  {#if showPassword}<EyeOff size={15} />{:else}<Eye size={15} />{/if}
+                </button>
+              </div>
+              <p class="si-hint">Minimum 6 characters</p>
+            </div>
+
+            <div class="si-field">
+              <label class="si-label" for="confirm-password">Confirm password <span class="si-req">*</span></label>
+              <div class="si-input-wrap">
+                <span class="si-input-icon"><Lock size={15} /></span>
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  id="confirm-password"
+                  bind:value={confirmPassword}
+                  placeholder="Confirm your password"
+                  class="si-input si-input--toggle"
+                  disabled={isLoading}
+                />
+                <button type="button" class="si-eye-btn" on:click={() => (showConfirmPassword = !showConfirmPassword)}>
+                  {#if showConfirmPassword}<EyeOff size={15} />{:else}<Eye size={15} />{/if}
+                </button>
               </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">
-                First name
-                {#if receiptFetched}<Lock size={14} class="lock-icon" />{/if}
-              </label>
-              <div class="input-wrapper">
-                <User size={17} class="input-icon" />
-                <input type="text" bind:value={firstName} placeholder="Oluwaseun"
-                  class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} />
-              </div>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label">
-              Other name(s)
-              {#if receiptFetched}<Lock size={14} class="lock-icon" />{:else}<span class="optional">optional</span>{/if}
-            </label>
-            <div class="input-wrapper">
-              <User size={17} class="input-icon" />
-              <input type="text" bind:value={otherName} placeholder="Middle name"
-                class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">
-                Faculty / College
-                {#if receiptFetched}<Lock size={14} class="lock-icon" />{/if}
-              </label>
-              <div class="input-wrapper">
-                <Building2 size={17} class="input-icon" />
-                <input type="text" bind:value={faculty} placeholder="Engineering"
-                  class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">
-                Department
-                {#if receiptFetched}<Lock size={14} class="lock-icon" />{/if}
-              </label>
-              <div class="input-wrapper">
-                <BookOpen size={17} class="input-icon" />
-                <input type="text" bind:value={department} placeholder="Computer Science"
-                  class="form-input" class:prefilled={receiptFetched} readonly={receiptFetched} />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Phone number <span class="optional">optional</span></label>
-            <div class="input-wrapper">
-              <Phone size={17} class="input-icon" />
-              <input type="tel" bind:value={phone} placeholder="+234 801 234 5678" class="form-input" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Email address</label>
-            <div class="input-wrapper">
-              <Mail size={17} class="input-icon" />
-              <input type="email" bind:value={email} placeholder="you@university.edu.ng" class="form-input" />
-            </div>
-          </div>
-
-          <div class="button-group">
-            <button type="button" class="back-btn" on:click={prevStep}>
-              <ChevronLeft size={17} /> Back
-            </button>
-            <button type="button" class="next-btn" on:click={nextStep} disabled={isLoading}>
-              Continue <ChevronRight size={17} />
-            </button>
-          </div>
-
-        </div>
-      {/if}
-
-      <!-- ══ STEP 3: Security ══ -->
-      {#if currentStep === 3}
-        <div class="step-content">
-
-          <div class="form-group">
-            <label class="form-label">Password</label>
-            <div class="input-wrapper">
-              <Lock size={17} class="input-icon" />
-              <input
-                type={showPassword ? 'text' : 'password'}
-                bind:value={password}
-                placeholder="Create a strong password"
-                class="form-input"
-                disabled={isLoading}
-              />
-              <button type="button" class="password-toggle" on:click={() => (showPassword = !showPassword)}>
-                {#if showPassword}<EyeOff size={17} />{:else}<Eye size={17} />{/if}
+            <div class="si-actions">
+              <button type="button" class="si-btn-back" on:click={prevStep} disabled={isLoading}>
+                <ChevronLeft size={15} /> Back
+              </button>
+              <button type="button" class="si-btn-next si-btn-submit" on:click={handleSubmit} disabled={isLoading}>
+                {#if isLoading}
+                  <span class="si-spinner"></span> Creating account…
+                {:else}
+                  <UserPlus size={15} /> Create account <ArrowRight size={15} />
+                {/if}
               </button>
             </div>
           </div>
-
-          <div class="form-group">
-            <label class="form-label">Confirm password</label>
-            <div class="input-wrapper">
-              <Lock size={17} class="input-icon" />
-              <input
-                type={showConfirmPassword ? 'text' : 'password'}
-                bind:value={confirmPassword}
-                placeholder="Confirm your password"
-                class="form-input"
-                disabled={isLoading}
-              />
-              <button type="button" class="password-toggle" on:click={() => (showConfirmPassword = !showConfirmPassword)}>
-                {#if showConfirmPassword}<EyeOff size={17} />{:else}<Eye size={17} />{/if}
-              </button>
-            </div>
-          </div>
-
-          <div class="button-group">
-            <button type="button" class="back-btn" on:click={prevStep} disabled={isLoading}>
-              <ChevronLeft size={17} /> Back
-            </button>
-            <button type="button" class="submit-btn" on:click={handleSubmit} disabled={isLoading}>
-              {#if isLoading}
-                <span class="spinner"></span> Creating…
-              {:else}
-                <UserPlus size={17} /> Create account <ArrowRight size={17} />
-              {/if}
-            </button>
-          </div>
-
-        </div>
-      {/if}
-
-      <div class="toggle-mode">
-        <span class="toggle-text">Already have an account?</span>
-        <a href="/signin" class="toggle-link">Sign in</a>
+        {/if}
       </div>
 
-      <p class="terms-text">
-        By signing up, you agree to our
-        <a href="/terms">Terms of Service</a> and
-        <a href="/privacy">Privacy Policy</a>.
+      <p class="si-footer-text">
+        Already have an account? <a href="/signin" class="si-link">Sign in</a>
       </p>
-
+      <p class="si-terms-text">
+        By signing up, you agree to our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+      </p>
     </div>
   </div>
-
 </div>
 
 <style>
-  /* ── Root two-column layout ────────────────────────── */
-  .signup-page {
-    display: flex;
-    min-height: 100vh;
-    background: var(--bg-primary);
-  }
-
-  /* ── Left brand panel ──────────────────────────────── */
-  .brand-panel {
-    display: none;
-    width: 460px;
-    flex-shrink: 0;
-    background: linear-gradient(145deg, var(--purple-primary-dark, #4c1d95), #3b0764);
-    color: white;
-    overflow: hidden;
-  }
-  @media (min-width: 1024px) {
-    .brand-panel { display: block; }
-  }
-  .brand-inner {
-    padding: 48px 40px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .brand-logo {
-    display: flex; align-items: center; gap: 12px;
-    text-decoration: none; margin-bottom: 52px;
-  }
-  .logo-mark {
-    width: 44px; height: 44px;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 12px; display: flex;
-    align-items: center; justify-content: center; color: white;
-  }
-  .logo-mark svg { width: 22px; height: 22px; }
-  .logo-mark.sm  { width: 34px; height: 34px; border-radius: 9px; background: var(--purple-primary); border: none; }
-  .logo-mark.sm svg { width: 18px; height: 18px; }
-  .brand-name { font-size: 24px; font-weight: 800; letter-spacing: -0.04em; }
-
-  .brand-hero { margin-bottom: 48px; }
-  .brand-badge {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    padding: 5px 13px; border-radius: 999px; font-size: 12px; margin-bottom: 18px;
-  }
-  .brand-headline {
-    font-size: 40px; line-height: 1.12;
-    font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px;
-  }
-  .brand-headline em { color: #c4b5fd; font-style: italic; font-weight: 400; }
-  .brand-desc { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.8); max-width: 340px; }
-
-  .brand-features {
-    display: flex; flex-direction: column;
-    gap: 22px; margin-bottom: auto; padding-bottom: 32px;
-  }
-  .feature-item { display: flex; gap: 14px; align-items: flex-start; }
-  .feature-item :global(svg) { color: #c4b5fd; margin-top: 2px; flex-shrink: 0; }
-  .feature-item strong { display: block; font-size: 14px; margin-bottom: 2px; }
-  .feature-item span   { font-size: 13px; color: rgba(255,255,255,0.7); }
-
-  .brand-footer {
-    font-size: 13px; color: rgba(255,255,255,0.6);
-    text-align: center; padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.12);
-  }
-
-  /* ── Right form side ───────────────────────────────── */
-  .form-side {
-    flex: 1; display: flex;
-    align-items: center; justify-content: center;
-    padding: 40px 20px; overflow-y: auto;
-  }
-  .auth-card {
-    max-width: 500px; width: 100%;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 24px; padding: 40px 32px;
-  }
-
-  /* Mobile logo */
-  .mobile-logo {
-    display: none; align-items: center; justify-content: center;
-    gap: 10px; margin-bottom: 24px;
-  }
-  @media (max-width: 1023px) { .mobile-logo { display: flex; } }
-  .logo-text {
-    font-size: 20px; font-weight: 800; letter-spacing: -0.04em;
-    color: var(--purple-primary);
-  }
-
-  /* ── Header ─────────────────────────────────────────── */
-  .auth-header { text-align: center; margin-bottom: 28px; }
-  .auth-title  { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 6px; }
-  .auth-subtitle { font-size: 14px; color: var(--text-secondary); }
-
-  /* ── Stepper ─────────────────────────────────────────── */
-  .stepper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 28px; }
-  .step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-  .step-number {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--bg-primary); border: 2px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 600; color: var(--text-muted); transition: all 0.2s;
-  }
-  .step.active .step-number { background: var(--purple-primary); border-color: var(--purple-primary); color: white; }
-  .step.done  .step-number  { background: #22c55e; border-color: #22c55e; color: white; }
-  .step-label { font-size: 11px; color: var(--text-muted); }
-  .step.active .step-label, .step.done .step-label { color: var(--purple-primary); font-weight: 500; }
-  .step-line  { width: 40px; height: 2px; background: var(--border); transition: background 0.2s; }
-  .step-line.active { background: var(--purple-primary); }
-
-  /* ── Messages ─────────────────────────────────────────── */
-  .message {
-    display: flex; align-items: center; gap: 9px;
-    padding: 11px 15px; border-radius: 12px; margin-bottom: 20px; font-size: 13px;
-  }
-  .message.error   { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3); color: #ef4444; }
-  .message.success { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3); color: #22c55e; }
-
-  /* ── Form ─────────────────────────────────────────────── */
-  .step-content { display: flex; flex-direction: column; gap: 18px; }
-  .form-group   { display: flex; flex-direction: column; gap: 6px; }
-  .form-row     { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .form-label   { font-size: 13px; font-weight: 500; color: var(--text-secondary); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-  .optional     { font-size: 11px; color: var(--text-muted); font-weight: 400; }
-  .required     { font-size: 11px; color: #f59e0b; font-weight: 400; }
-
-  .input-wrapper { position: relative; display: flex; align-items: center; }
-  :global(.input-icon) { position: absolute; left: 13px; color: var(--text-muted); pointer-events: none; }
-
-  .form-input {
-    width: 100%; padding: 11px 12px 11px 40px;
-    background: var(--bg-primary); border: 1px solid var(--border);
-    border-radius: 12px; font-size: 14px; color: var(--text-primary);
-    transition: border-color 0.15s; font-family: inherit;
-  }
-  .form-input:focus    { outline: none; border-color: var(--purple-primary); }
-  .form-input:disabled { opacity: 0.5; cursor: not-allowed; }
-  .form-input.prefilled {
-    background: var(--bg-secondary); border-color: rgba(109,99,255,0.2);
-    color: var(--text-secondary); cursor: default;
-  }
-
-  .password-toggle, .clear-btn {
-    position: absolute; right: 13px; background: none; border: none;
-    color: var(--text-muted); cursor: pointer; padding: 0;
-    display: flex; align-items: center;
-  }
-  .password-toggle:hover, .clear-btn:hover { color: var(--text-secondary); }
-
-  /* ── University dropdown ──────────────────────────────── */
+  /* Inherit all styles from layout.css and signin page, plus additions */
+  :global(.si-page *), .signup-page * { font-family: 'DM Sans', system-ui, sans-serif; box-sizing: border-box; }
+  
+  .signup-page { display: flex; min-height: 100vh; background: var(--bg-primary); }
+  
+  /* Reuse signin panel styles */
+  .si-panel { display: none; position: relative; width: 440px; flex-shrink: 0; background: linear-gradient(160deg, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%); overflow: hidden; }
+  @media (min-width: 1024px) { .si-panel { display: flex; } }
+  .si-panel-inner { position: relative; z-index: 2; display: flex; flex-direction: column; padding: 2.5rem; height: 100%; }
+  .si-panel-glow { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(106,44,145,0.25) 0%, transparent 70%); pointer-events: none; }
+  
+  .si-logo-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 2.5rem; transition: opacity 0.2s; }
+  .si-logo-link:hover { opacity: 0.85; }
+  .si-logo-mark { width: 42px; height: 42px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
+  .si-logo-mark svg { width: 22px; height: 22px; }
+  .si-logo-mark.sm { width: 36px; height: 36px; border-radius: 10px; background: var(--purple-primary); border-color: transparent; color: white; }
+  .si-logo-mark.sm svg { width: 18px; height: 18px; }
+  
+  .si-wordmark { font-size: 20px; font-weight: 800; letter-spacing: -0.04em; color: white; }
+  .si-wordmark.inline { color: var(--text-primary); }
+  
+  .si-panel-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.875rem; background: rgba(106,44,145,0.25); border: 1px solid rgba(106,44,145,0.4); border-radius: 100px; font-size: 0.75rem; color: #c4b5fd; margin-bottom: 1.5rem; width: fit-content; }
+  .si-panel-headline { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.5rem; line-height: 1.2; color: white; margin-bottom: 1rem; }
+  .si-panel-headline em { color: #c4b5fd; font-style: italic; }
+  .si-panel-desc { font-size: 0.875rem; line-height: 1.65; color: rgba(196,181,253,0.82); margin-bottom: 2rem; }
+  
+  .si-features { display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: auto; }
+  .si-feature-card { display: flex; align-items: flex-start; gap: 0.875rem; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border-radius: 1rem; transition: background 0.2s; }
+  .si-feature-card:hover { background: rgba(255,255,255,0.09); }
+  .si-feature-icon { width: 36px; height: 36px; background: rgba(106,44,145,0.25); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #c4b5fd; flex-shrink: 0; }
+  .si-feature-card strong { display: block; font-size: 0.813rem; font-weight: 600; color: white; margin-bottom: 0.2rem; }
+  .si-feature-card span { font-size: 0.75rem; color: rgba(196,181,253,0.8); line-height: 1.4; }
+  
+  .si-panel-footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  .si-avatars { display: flex; align-items: center; margin-bottom: 0.625rem; }
+  .si-avatar { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #2d1b4e; margin-left: -7px; }
+  .si-avatar:first-child { margin-left: 0; }
+  .si-avatar-count { width: 30px; height: 30px; border-radius: 50%; background: rgba(106,44,145,0.4); border: 2px solid #2d1b4e; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; font-weight: 700; color: white; margin-left: -7px; }
+  .si-panel-footer p { font-size: 0.688rem; color: rgba(196,181,253,0.65); }
+  
+  /* Form side */
+  .si-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; min-height: 100vh; background: var(--bg-primary); }
+  .si-form-shell { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 1.5rem; }
+  
+  .si-back-home { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 100px; padding: 0.5rem 1rem; font-size: 0.813rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; width: fit-content; }
+  .si-back-home:hover { border-color: var(--purple-primary); color: var(--purple-primary); background: var(--purple-light); transform: translateX(-2px); }
+  
+  .si-mobile-brand { display: none; align-items: center; gap: 8px; justify-content: center; }
+  @media (max-width: 1023px) { .si-mobile-brand { display: flex; } }
+  
+  .si-form-header { text-align: center; }
+  .si-form-title { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.75rem, 4vw, 2.25rem); color: var(--text-primary); margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+  .si-form-subtitle { font-size: 0.875rem; color: var(--text-secondary); }
+  
+  .si-card { background: var(--bg-secondary); border-radius: 1.5rem; border: 1px solid var(--border); padding: clamp(1.25rem, 5vw, 2rem); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.12); }
+  
+  /* Stepper */
+  .si-steps { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .si-step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: all 0.3s ease; }
+  .si-step-dot.active { background: var(--purple-primary); width: 24px; border-radius: 4px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--purple-primary) 20%, transparent); }
+  .si-step-dot.done { background: var(--purple-primary-dark); }
+  .si-step-line { flex: 1; height: 2px; background: var(--border); border-radius: 1px; transition: background 0.4s ease; }
+  .si-step-line.filled { background: var(--purple-primary-dark); }
+  .si-step-labels { display: flex; justify-content: space-between; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+  .si-step-label { font-size: 0.688rem; font-weight: 500; color: var(--text-muted); }
+  .si-step-label.active { color: var(--purple-primary); font-weight: 600; }
+  
+  /* Messages */
+  .si-alert-error { display: flex; align-items: center; gap: 0.625rem; padding: 0.75rem 1rem; background: color-mix(in srgb, var(--error) 10%, transparent); border: 1px solid color-mix(in srgb, var(--error) 30%, transparent); border-radius: 0.75rem; color: var(--error); font-size: 0.813rem; margin-bottom: 1.5rem; }
+  .si-alert-success { display: flex; align-items: center; gap: 0.625rem; padding: 0.75rem 1rem; background: color-mix(in srgb, var(--success) 10%, transparent); border: 1px solid color-mix(in srgb, var(--success) 30%, transparent); border-radius: 0.75rem; color: var(--success); font-size: 0.813rem; margin-bottom: 1.5rem; }
+  
+  /* Welcome message */
+  .si-welcome-msg { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: var(--purple-light); border-radius: 1rem; margin-bottom: 1.5rem; }
+  .si-welcome-msg :global(svg) { color: var(--purple-primary); flex-shrink: 0; }
+  .si-welcome-msg strong { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text-primary); }
+  .si-welcome-msg span { font-size: 0.75rem; color: var(--text-secondary); }
+  
+  /* Form fields */
+  .si-field { display: flex; flex-direction: column; gap: 0.375rem; margin-bottom: 1.125rem; }
+  .si-label { font-size: 0.813rem; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 0.375rem; flex-wrap: wrap; }
+  .si-req { color: var(--purple-primary); font-weight: 700; }
+  .si-req-hint { font-size: 0.688rem; color: var(--text-muted); font-weight: 400; margin-left: 0.25rem; }
+  .si-optional { font-size: 0.688rem; color: var(--text-muted); font-weight: 400; }
+  .si-hint { font-size: 0.688rem; color: var(--text-muted); }
+  
+  .si-input-wrap { position: relative; }
+  .si-input-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); display: flex; align-items: center; pointer-events: none; }
+  .si-input { width: 100%; padding: 0.75rem 0.875rem 0.75rem 2.625rem; border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; font-family: 'DM Sans', sans-serif; color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; outline: none; }
+  .si-input:hover { border-color: var(--purple-accent); }
+  .si-input:focus { border-color: var(--purple-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--purple-primary) 12%, transparent); }
+  .si-input--prefilled { background: var(--bg-tertiary); border-color: var(--border-light); color: var(--text-secondary); cursor: default; }
+  .si-input--toggle { padding-right: 2.75rem; }
+  .si-input--ref { padding-right: 70px !important; }
+  
+  .si-eye-btn { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 0.25rem; transition: color 0.2s; display: flex; }
+  .si-eye-btn:hover { color: var(--purple-primary); }
+  .si-clear-btn { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 0; display: flex; align-items: center; }
+  .si-clear-btn:hover { color: var(--error); }
+  
+  .si-lock-icon { color: var(--text-muted); flex-shrink: 0; }
+  
+  /* Form row */
+  .si-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }
+  
+  /* Buttons */
+  .si-btn-next, .si-btn-submit { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8125rem 1.25rem; background: var(--purple-primary); color: white; border: none; border-radius: 0.75rem; font-size: 0.9375rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px color-mix(in srgb, var(--purple-primary) 35%, transparent); transition: all 0.2s; }
+  .si-btn-next:hover:not(:disabled) { background: var(--purple-primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--purple-primary) 45%, transparent); }
+  .si-btn-next:active:not(:disabled) { transform: translateY(0); }
+  .si-btn-next:disabled { opacity: 0.65; cursor: not-allowed; }
+  .si-btn-next--full { width: 100%; }
+  .si-btn-submit { background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-primary-dark) 100%); }
+  
+  .si-btn-back { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.75rem 1.125rem; background: var(--bg-primary); border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+  .si-btn-back:hover { border-color: var(--purple-primary); color: var(--purple-primary); background: var(--purple-light); transform: translateX(-2px); }
+  
+  .si-actions { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; }
+  
+  /* University dropdown */
   .university-search { position: relative; }
-  .dropdown {
-    position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-    background: var(--bg-primary); border: 1px solid var(--border);
-    border-radius: 12px; max-height: 210px; overflow-y: auto; z-index: 20;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  }
-  .dropdown-item {
-    width: 100%; padding: 10px 14px; text-align: left;
-    background: none; border: none; cursor: pointer;
-    display: flex; gap: 10px; align-items: baseline; transition: background 0.12s;
-  }
-  .dropdown-item:hover { background: var(--bg-secondary); }
-  .dropdown-acronym { font-weight: 700; color: var(--purple-primary); font-size: 12px; min-width: 56px; }
-  .dropdown-name    { font-size: 13px; color: var(--text-primary); }
-
-  /* ── University card ──────────────────────────────────── */
-  .uni-card {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 16px; border-radius: 14px;
-    background: var(--bg-primary); border: 1px solid rgba(109,99,255,0.25);
-  }
-  .uni-card-logo {
-    width: 48px; height: 48px; border-radius: 10px;
-    background: var(--bg-secondary); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
-  }
-  .uni-card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
-  .uni-initials      { font-size: 14px; font-weight: 700; color: var(--purple-primary); }
-  .uni-initials.sm   { font-size: 11px; }
-  .uni-card-info     { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .uni-card-name     { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
-  .uni-card-acronym  { font-size: 11px; color: var(--purple-primary); font-weight: 700; }
-  :global(.uni-card-check) { color: #22c55e; flex-shrink: 0; }
-
-  /* ── University banner (step 2) ───────────────────────── */
-  .uni-banner {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 14px; border-radius: 12px;
-    background: var(--bg-primary); border: 1px solid var(--border);
-  }
-  .uni-banner-logo {
-    width: 30px; height: 30px; border-radius: 7px; overflow: hidden;
-    background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .uni-banner-logo img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
-  .uni-banner-name     { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
-
-  /* ── MOUAU section ────────────────────────────────────── */
-  .mouau-section {
-    display: flex; flex-direction: column; gap: 16px;
-    padding: 18px; background: var(--bg-primary);
-    border: 1px solid var(--border); border-radius: 14px;
-  }
-  .mouau-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 4px 10px; border-radius: 6px;
-    background: rgba(109,99,255,.12); border: 1px solid rgba(109,99,255,.25);
-    font-size: 11px; font-weight: 700; color: var(--purple-accent); letter-spacing: 0.04em;
-  }
-
-  /* ── Scan block ───────────────────────────────────────── */
-  .scan-block { display: flex; flex-direction: column; gap: 8px; }
-  .scan-block.locked { opacity: 0.6; }
-  .scan-options-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
-  .scan-lock-hint     { color: var(--text-muted); font-weight: 400; font-size: 11px; }
-  .scan-btns  { display: flex; gap: 8px; flex-wrap: wrap; }
-  .scan-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px; border-radius: 9px; font-size: 12px; font-weight: 600;
-    background: var(--bg-secondary); border: 1px solid var(--border);
-    color: var(--text-secondary); cursor: pointer; transition: all 0.15s; font-family: inherit;
-  }
-  .scan-btn:hover:not(:disabled):not(.disabled) { border-color: var(--purple-accent); color: var(--purple-primary); }
-  .scan-btn:disabled, .scan-btn.disabled { pointer-events: none; }
-
-  .ref-input { padding-right: 70px !important; }
-  .inline-fetch-btn {
-    position: absolute; right: 8px;
-    padding: 5px 12px; border-radius: 8px;
-    background: var(--purple-primary); color: white;
-    border: none; cursor: pointer; font-size: 12px; font-weight: 600;
-    display: flex; align-items: center; gap: 5px;
-    transition: opacity 0.15s; font-family: inherit;
-  }
-  .inline-fetch-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* ── Webcam ───────────────────────────────────────────── */
-  .webcam-box   { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .webcam-frame {
-    position: relative; width: 100%; border-radius: 12px;
-    overflow: hidden; background: #000; aspect-ratio: 4/3;
-  }
-  .webcam-video  { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .scan-reticle  {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    width: 170px; height: 170px;
-    border: 2.5px solid var(--purple-primary); border-radius: 14px;
-    box-shadow: 0 0 0 9999px rgba(0,0,0,0.45); pointer-events: none;
-  }
-  .webcam-hint   { font-size: 12px; color: var(--text-muted); text-align: center; }
-  .stop-cam-btn  {
-    display: flex; align-items: center; gap: 5px;
-    padding: 7px 14px; border-radius: 9px; font-size: 12px; font-weight: 600;
-    background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
-    color: #ef4444; cursor: pointer; font-family: inherit;
-  }
-  .cam-error { font-size: 12px; color: #ef4444; }
-
-  /* ── Receipt result ───────────────────────────────────── */
-  .receipt-result {
-    padding: 12px 14px;
-    background: rgba(34,211,160,.08); border: 1px solid rgba(34,211,160,.25); border-radius: 10px;
-  }
-  .receipt-label {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 11px; font-weight: 700; color: #22d3a0;
-    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;
-  }
-  .receipt-rows { display: flex; flex-direction: column; gap: 4px; }
-  .receipt-row  { display: flex; justify-content: space-between; font-size: 12px; gap: 8px; }
-  .receipt-key  { color: var(--text-muted); text-transform: capitalize; }
-  .receipt-val  { color: var(--text-primary); font-weight: 500; text-align: right; }
-
-  /* ── Prefill notice ───────────────────────────────────── */
-  .prefill-notice {
-    display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
-    padding: 10px 13px; border-radius: 10px; font-size: 12px; color: var(--text-secondary);
-    background: rgba(109,99,255,.07); border: 1px solid rgba(109,99,255,.18);
-  }
-  .re-scan-link {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: none; border: none; color: var(--purple-primary);
-    font-size: 12px; font-weight: 600; cursor: pointer; margin-left: auto; padding: 0;
-  }
-
-  /* ── Buttons ──────────────────────────────────────────── */
-  .button-group { display: flex; gap: 12px; margin-top: 6px; }
-  .next-btn, .submit-btn {
-    flex: 2; display: flex; align-items: center; justify-content: center; gap: 7px;
-    padding: 13px 20px; background: var(--purple-primary); color: white;
-    border: none; border-radius: 12px; font-size: 14px; font-weight: 600;
-    cursor: pointer; transition: all 0.15s; margin-top: 4px; font-family: inherit;
-  }
-  .next-btn:hover:not(:disabled),
-  .submit-btn:hover:not(:disabled) { background: var(--purple-primary-dark, #6d28d9); transform: scale(0.99); }
-  .next-btn:disabled, .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-  .back-btn {
-    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
-    padding: 13px 16px; background: transparent; color: var(--text-secondary);
-    border: 1.5px solid var(--border); border-radius: 12px;
-    font-size: 14px; font-weight: 600; cursor: pointer;
-    transition: all 0.15s; margin-top: 4px; font-family: inherit;
-  }
-  .back-btn:hover { border-color: var(--purple-accent); }
-  .spinner {
-    width: 16px; height: 16px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.3); border-top-color: white;
-    animation: spin 0.6s linear infinite;
-  }
-  .mini-spinner {
-    width: 11px; height: 11px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.3); border-top-color: white;
-    animation: spin 0.6s linear infinite; display: inline-block;
-  }
+  .si-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 0.75rem; max-height: 240px; overflow-y: auto; z-index: 20; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .si-dropdown-item { width: 100%; padding: 0.75rem 1rem; text-align: left; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: background 0.12s; font-family: inherit; }
+  .si-dropdown-item:hover { background: var(--bg-secondary); }
+  .si-dropdown-acronym { font-weight: 700; color: var(--purple-primary); font-size: 0.75rem; min-width: 56px; }
+  .si-dropdown-name { font-size: 0.813rem; color: var(--text-primary); flex: 1; text-align: left; }
+  .si-active-tag { font-size: 0.625rem; font-weight: 600; padding: 0.125rem 0.5rem; background: #22c55e; color: white; border-radius: 999px; letter-spacing: 0.02em; flex-shrink: 0; }
+  .si-active-tag--card { background: #22c55e; font-size: 0.563rem; padding: 0.125rem 0.5rem; }
+  
+  /* University card */
+  .si-uni-card { display: flex; align-items: center; gap: 0.875rem; padding: 1rem 1.25rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 1rem; margin-top: 0.5rem; }
+  .si-uni-card-logo { width: 48px; height: 48px; border-radius: 10px; background: var(--bg-tertiary); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+  .si-uni-card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .si-uni-initials { font-size: 0.875rem; font-weight: 700; color: var(--purple-primary); }
+  .si-uni-initials.sm { font-size: 0.688rem; }
+  .si-uni-card-info { flex: 1; }
+  .si-uni-card-name { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 0.25rem; }
+  .si-uni-card-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .si-uni-card-acronym { font-size: 0.688rem; color: var(--purple-primary); font-weight: 600; }
+  .si-uni-card-check { color: #22c55e; flex-shrink: 0; }
+  
+  /* University banner (step 2) */
+  .si-uni-banner { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 0.875rem; margin-bottom: 1rem; }
+  .si-uni-banner-logo { width: 36px; height: 36px; border-radius: 8px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+  .si-uni-banner-logo img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
+  .si-uni-banner-info { flex: 1; }
+  .si-uni-banner-name { font-size: 0.813rem; font-weight: 600; color: var(--text-primary); display: block; }
+  .si-uni-banner-acronym { font-size: 0.688rem; color: var(--purple-primary); }
+  
+  /* MOUAU section */
+  .si-mouau-section { display: flex; flex-direction: column; gap: 1rem; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 1rem; margin-top: 0.5rem; }
+  .si-mouau-badge { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; background: color-mix(in srgb, var(--purple-primary) 12%, transparent); border: 1px solid color-mix(in srgb, var(--purple-primary) 25%, transparent); border-radius: 6px; font-size: 0.688rem; font-weight: 700; color: var(--purple-primary); width: fit-content; }
+  
+  .si-scan-block { display: flex; flex-direction: column; gap: 0.5rem; }
+  .si-scan-block--locked { opacity: 0.6; }
+  .si-scan-options-label { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); }
+  .si-scan-lock-hint { color: var(--text-muted); font-weight: 400; font-size: 0.688rem; }
+  .si-scan-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .si-scan-btn { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; font-family: inherit; }
+  .si-scan-btn:hover:not(:disabled) { border-color: var(--purple-accent); color: var(--purple-primary); }
+  .si-scan-btn:disabled, .si-scan-btn.disabled { pointer-events: none; opacity: 0.5; }
+  
+  .si-inline-fetch-btn { position: absolute; right: 0.5rem; bottom: 0.8rem; padding: 0.375rem 0.875rem; border-radius: 0.5rem; background: var(--purple-primary); color: white; border: none; cursor: pointer; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 0.25rem; transition: opacity 0.15s; font-family: inherit; }
+  .si-inline-fetch-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  
+  /* Webcam */
+  .si-webcam-box { display: flex; flex-direction: column; align-items: center; gap: 0.625rem; }
+  .si-webcam-frame { position: relative; width: 100%; border-radius: 0.75rem; overflow: hidden; background: #000; aspect-ratio: 4/3; }
+  .si-webcam-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .si-scan-reticle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; height: 150px; border: 2px solid var(--purple-primary); border-radius: 0.75rem; box-shadow: 0 0 0 9999px rgba(0,0,0,0.45); pointer-events: none; }
+  .si-webcam-hint { font-size: 0.688rem; color: var(--text-muted); text-align: center; }
+  .si-stop-cam-btn { display: flex; align-items: center; gap: 0.375rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; background: color-mix(in srgb, var(--error) 10%, transparent); border: 1px solid color-mix(in srgb, var(--error) 30%, transparent); color: var(--error); cursor: pointer; font-family: inherit; }
+  .si-cam-error { font-size: 0.75rem; color: var(--error); }
+  
+  /* Receipt result */
+  .si-receipt-result { padding: 0.75rem 1rem; background: color-mix(in srgb, var(--success) 8%, transparent); border: 1px solid color-mix(in srgb, var(--success) 25%, transparent); border-radius: 0.75rem; }
+  .si-receipt-label { display: flex; align-items: center; gap: 0.375rem; font-size: 0.688rem; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.5rem; }
+  .si-receipt-rows { display: flex; flex-direction: column; gap: 0.25rem; }
+  .si-receipt-row { display: flex; justify-content: space-between; font-size: 0.75rem; gap: 0.5rem; }
+  .si-receipt-key { color: var(--text-muted); text-transform: capitalize; }
+  .si-receipt-val { color: var(--text-primary); font-weight: 500; text-align: right; }
+  
+  /* Prefill notice */
+  .si-prefill-notice { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding: 0.625rem 0.875rem; border-radius: 0.75rem; font-size: 0.75rem; color: var(--text-secondary); background: color-mix(in srgb, var(--purple-primary) 7%, transparent); border: 1px solid color-mix(in srgb, var(--purple-primary) 18%, transparent); margin-bottom: 1rem; }
+  .si-rescan-link { display: inline-flex; align-items: center; gap: 0.25rem; background: none; border: none; color: var(--purple-primary); font-size: 0.688rem; font-weight: 600; cursor: pointer; margin-left: auto; padding: 0; font-family: inherit; }
+  
+  /* Spinner */
+  .si-spinner { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0; }
+  .si-mini-spinner { width: 10px; height: 10px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── Footer ───────────────────────────────────────────── */
-  .toggle-mode {
-    text-align: center; margin-top: 22px; padding-top: 22px;
-    border-top: 1px solid var(--border);
-    font-size: 13px; color: var(--text-secondary);
-  }
-  .toggle-link { color: var(--purple-primary); font-weight: 600; margin-left: 5px; text-decoration: none; }
-  .toggle-link:hover { text-decoration: underline; }
-  .terms-text {
-    text-align: center; font-size: 11px; color: var(--text-muted);
-    margin-top: 16px; line-height: 1.6;
-  }
-  .terms-text a { color: var(--purple-primary); text-decoration: none; }
-  .terms-text a:hover { text-decoration: underline; }
+  
+  /* Footer */
+  .si-footer-text { text-align: center; font-size: 0.875rem; color: var(--text-secondary); }
+  .si-terms-text { text-align: center; font-size: 0.688rem; color: var(--text-muted); margin-top: 0.75rem; line-height: 1.5; }
+  .si-terms-text a { color: var(--purple-primary); text-decoration: none; }
+  .si-terms-text a:hover { text-decoration: underline; }
+  
+  .si-link { color: var(--purple-primary); font-weight: 500; text-decoration: none; }
+  .si-link:hover { text-decoration: underline; }
+  
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-
-  @media (max-width: 480px) {
-    .auth-card { padding: 28px 20px; border-radius: 0; border: none; }
-    .form-side { padding: 0; align-items: flex-start; }
-    .form-row  { grid-template-columns: 1fr; }
-    .button-group { flex-direction: column; }
-    .back-btn, .next-btn, .submit-btn { flex: unset; width: 100%; margin-top: 0; }
+  
+  /* Responsive */
+  @media (max-width: 640px) {
+    .si-main { padding: 1.5rem 1rem; align-items: flex-start; }
+    .si-form-shell { gap: 1.25rem; }
+    .si-card { border-radius: 1.25rem; padding: 1.25rem; }
+    .si-actions { flex-direction: column-reverse; }
+    .si-btn-back, .si-btn-next { width: 100%; justify-content: center; }
+    .si-back-home { font-size: 0.75rem; padding: 0.375rem 0.875rem; }
+    .si-form-row { grid-template-columns: 1fr; gap: 0.75rem; }
+    .si-step-labels { display: none; }
   }
 </style>

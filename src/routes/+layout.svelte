@@ -168,35 +168,52 @@
 	}
 
 	/* ── True Full-Width Edge-to-Edge Nav ── */
-	.nav {
-		width: auto; /* or 100vw */
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: var(--bg-primary);
-		border-bottom: 1px solid var(--border);
-		backdrop-filter: blur(12px);
-	}
+.nav {
+    /* Critical Fix: Span exactly from edge to edge */
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    
+    z-index: 100;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    
+    /* Optional: subtle transparency to see content behind it */
+    background: color-mix(in srgb, var(--bg-primary), transparent 10%);
+}
 
-	.nav-inner {
-		max-width: auto;
-		margin: 0 auto;
-		padding: 0 32px;
-		height: 68px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
+.nav-inner {
+    /* Use 100% width so it stretches on all screens */
+    width: 100%;
+    
+    /* If you want the content to stay centered on huge monitors: 
+       max-width: 1440px; 
+       margin: 0 auto; 
+    */
+    
+    padding: 0 32px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-	/* Force full width even if body has default margins/padding */
-	html,
-	body {
-		margin: 0;
-		padding: 0;
-		width: 100%;
-	}
+/* Fix for content being hidden behind the fixed nav */
+body {
+    padding-top: 68px;
+}
 
-	.nav-brand {
+/* Adjust padding for mobile to keep the edges clean */
+@media (max-width: 640px) {
+    .nav-inner {
+        padding: 0 16px;
+    }
+}
+
+		.nav-brand {
 		display: flex;
 		align-items: center;
 		gap: 10px;
