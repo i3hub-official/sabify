@@ -1,452 +1,635 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { theme } from '$lib/stores/theme';
-  import { Mail, Lock, ArrowRight, Eye, EyeOff, LogIn } from 'lucide-svelte';
+  import { goto } from '$app/navigation';
+  import { browser } from '$app/environment';
+  import { authClient } from '$lib/auth-client';
+  import { authStore } from '$lib/stores/auth';
+  import {
+    Mail, Lock, Eye, EyeOff, AlertCircle, ArrowRight, ArrowLeft,
+    ChevronLeft, Home, Sparkles, ShieldCheck, Fingerprint,
+    BookOpen, Zap
+  } from 'lucide-svelte';
 
-  onMount(() => {
-    theme.init();
+  let step         = $state<'identifier' | 'password'>('identifier');
+  let formData     = $state({ identifier: '', password: '', rememberMe: false });
+  let errors       = $state<Record<string, string>>({});
+  let isLoading    = $state(false);
+  let showPassword = $state(false);
+  let touched      = $state<Record<string, boolean>>({});
+
+  let visible = $state(!browser);
+
+  $effect(() => {
+    const unsub = authStore.subscribe(s => {
+      if (s.user) goto('/dashboard', { replaceState: true });
+      else visible = true;
+    });
+    return unsub;
   });
 
-  let email = $state('');
-  let password = $state('');
-  let showPassword = $state(false);
-  let isLoading = $state(false);
-  let errorMessage = $state('');
-  let successMessage = $state('');
+  const validateIdentifier = () => {
+    const e: Record<string, string> = {};
+    if (!formData.identifier.trim()) e.identifier = 'Required';
+    else if (!formData.identifier.includes('@')) e.identifier = 'Enter a valid email address';
+    return e;
+  };
 
-  async function handleSubmit() {
-    errorMessage = '';
-    successMessage = '';
+  const handleIdentifierSubmit = async (ev: Event) => {
+    ev.preventDefault();
+    const errs = validateIdentifier();
+    if (Object.keys(errs).length) { errors = errs; touched.identifier = true; return; }
+    errors = {};
+    step = 'password';
+  };
+
+  const handlePasswordSubmit = async (ev: Event) => {
+    ev.preventDefault();
     isLoading = true;
-
-    if (!email || !password) {
-      errorMessage = 'Please enter both email and password';
-      isLoading = false;
-      return;
-    }
-
+    errors = {};
     try {
-      // TODO: Connect to Better-Auth signin
-      console.log('Signing in:', { email, password });
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      successMessage = 'Sign in successful! Redirecting...';
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 1000);
-    } catch (error) {
-      errorMessage = 'Invalid email or password. Please try again.';
-    }
+      const resolveRes = await fetch('/api/login-resolver', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier: formData.identifier }),
+      });
+      if (!resolveRes.ok) { errors.submit = 'Account not found.'; return; }
+      const { email } = await resolveRes.json();
 
-    isLoading = false;
-  }
+      const { error } = await authClient.signIn.email({
+        email,
+        password: formData.password,
+        dontRememberMe: !formData.rememberMe,
+      });
+
+      if (error) errors.submit = error.message ?? 'Invalid credentials.';
+      else await goto('/dashboard');
+    } catch {
+      errors.submit = 'Sign in failed. Check your connection.';
+    } finally {
+      isLoading = false;
+    }
+  };
+
+  const handlePasskeyLogin = async () => {
+    isLoading = true;
+    errors = {};
+    try {
+      const { error } = await authClient.signIn.passkey();
+      if (error) errors.submit = error.message || 'Passkey authentication failed.';
+      else await goto('/dashboard');
+    } catch {
+      errors.submit = 'An unexpected error occurred.';
+    } finally {
+      isLoading = false;
+    }
+  };
+
+  const goBack = () => { step = 'identifier'; errors = {}; };
 </script>
 
 <svelte:head>
   <title>Sign in — Sabify</title>
-  <meta name="description" content="Sign in to your Sabify account. Access past questions, pay dues, and stay safe on campus." />
 </svelte:head>
 
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-header">
-      <div class="logo">
-        <div class="logo-mark">
+<div class="si-page" class:si-page--hidden={!visible}>
+
+<!-- ── Left brand panel ── (Now fully theme-aware) -->
+  <aside class="si-panel">
+    <div class="si-panel-inner">
+
+      <a href="/" class="si-logo-link">
+        <div class="si-logo-mark">
           <svg viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 10.5L9.5 13L13.5 8"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="logo-text">Sabify</span>
+        <span class="si-wordmark">Sabify</span>
+      </a>
+
+      <div class="si-panel-hero">
+        <div class="si-panel-badge">
+          <Sparkles size={13} />
+          <span>Welcome back</span>
+        </div>
+        <h2 class="si-panel-headline">
+          Your campus,<br/>
+          <em>in your pocket.</em>
+        </h2>
+        <p class="si-panel-desc">
+          Past questions, dues, safety alerts — one place for every Nigerian student.
+        </p>
       </div>
-      <h1 class="auth-title">Welcome back</h1>
-      <p class="auth-subtitle">Sign in to access your academic fortress</p>
+
+      <div class="si-features">
+        <div class="si-feature-card">
+          <div class="si-feature-icon"><BookOpen size={17} /></div>
+          <div>
+            <strong>Past Questions</strong>
+            <span>Study smarter with verified exam papers</span>
+          </div>
+        </div>
+        <div class="si-feature-card">
+          <div class="si-feature-icon"><Zap size={17} /></div>
+          <div>
+            <strong>Pay Dues Instantly</strong>
+            <span>Association dues without the stress</span>
+          </div>
+        </div>
+        <div class="si-feature-card">
+          <div class="si-feature-icon"><ShieldCheck size={17} /></div>
+          <div>
+            <strong>Campus Shield</strong>
+            <span>Safety alerts and verified reports</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="si-panel-footer">
+        <div class="si-avatars">
+          <div class="si-avatar" style="background:#a78bfa"></div>
+          <div class="si-avatar" style="background:#7c3aed"></div>
+          <div class="si-avatar" style="background:#6d28d9"></div>
+          <div class="si-avatar" style="background:#5b21b6"></div>
+          <div class="si-avatar-count">+8k</div>
+        </div>
+        <p>Trusted by students across Nigeria</p>
+      </div>
     </div>
+    <div class="si-panel-glow"></div>
+  </aside>
 
-    {#if errorMessage}
-      <div class="message error">
-        <span>⚠️</span>
-        <span>{errorMessage}</span>
-      </div>
-    {/if}
+  <!-- ── Right form panel ── -->
+  <main class="si-main">
+    <div class="si-form-shell">
 
-    {#if successMessage}
-      <div class="message success">
-        <span>✓</span>
-        <span>{successMessage}</span>
-      </div>
-    {/if}
+      <a href="/" class="si-back-home">
+        <ChevronLeft size={17} />
+        <Home size={13} />
+        <span>Back to Home</span>
+      </a>
 
-    <form on:submit|preventDefault={handleSubmit} class="auth-form">
-      <div class="form-group">
-        <label class="form-label">Email address</label>
-        <div class="input-wrapper">
-          <Mail size={18} class="input-icon" />
-          <input 
-            type="email" 
-            bind:value={email}
-            placeholder="you@university.edu.ng"
-            class="form-input"
-            disabled={isLoading}
-            required
-          />
+      <!-- Mobile-only logo -->
+      <div class="si-mobile-brand">
+        <div class="si-logo-mark sm">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 10.5L9.5 13L13.5 8"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
+        <span class="si-wordmark dark">Sabify</span>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <div class="input-wrapper">
-          <Lock size={18} class="input-icon" />
-          <input 
-            type={showPassword ? 'text' : 'password'}
-            bind:value={password}
-            placeholder="••••••••"
-            class="form-input"
-            disabled={isLoading}
-            required
-          />
-          <button 
-            type="button"
-            class="password-toggle"
-            on:click={() => showPassword = !showPassword}
-          >
-            {#if showPassword}
-              <EyeOff size={18} />
-            {:else}
-              <Eye size={18} />
-            {/if}
-          </button>
-        </div>
+      <div class="si-form-header">
+        <h1 class="si-form-title">Welcome back</h1>
+        <p class="si-form-subtitle">
+          {step === 'identifier' ? 'Sign in to your Sabify account' : 'Enter your credentials'}
+        </p>
       </div>
 
-      <div class="forgot-link">
-        <a href="/reset-password">Forgot password?</a>
-      </div>
+      <div class="si-card">
 
-      <button type="submit" class="submit-btn" disabled={isLoading}>
-        {#if isLoading}
-          <span class="loading-spinner"></span>
-          <span>Signing in...</span>
-        {:else}
-          <LogIn size={18} />
-          <span>Sign in</span>
-          <ArrowRight size={18} />
+        {#if errors.submit}
+          <div class="si-alert-error">
+            <AlertCircle size={17} />
+            <span>{errors.submit}</span>
+          </div>
         {/if}
-      </button>
-    </form>
 
-    <div class="divider">
-      <span class="divider-line"></span>
-      <span class="divider-text">or</span>
-      <span class="divider-line"></span>
+        <!-- Stepper -->
+        <div class="si-steps">
+          <div class="si-step-dot"
+            class:active={step === 'identifier'}
+            class:done={step === 'password'}></div>
+          <div class="si-step-line" class:filled={step === 'password'}></div>
+          <div class="si-step-dot" class:active={step === 'password'}></div>
+        </div>
+
+        <!-- ── Step 1: Email ── -->
+        {#if step === 'identifier'}
+          <div class="si-step-body">
+            <div class="si-welcome-msg">
+              <Mail size={19} />
+              <div>
+                <strong>Sign in securely</strong>
+                <span>Use the email you signed up with</span>
+              </div>
+            </div>
+
+            <form onsubmit={handleIdentifierSubmit}>
+              <div class="si-field">
+                <label class="si-label" for="identifier">
+                  Email address <span class="si-req">*</span>
+                </label>
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><Mail size={15} /></span>
+                  <input
+                    type="email"
+                    id="identifier"
+                    placeholder="you@university.edu.ng"
+                    bind:value={formData.identifier}
+                    onblur={() => { touched.identifier = true; errors.identifier = validateIdentifier().identifier ?? ''; }}
+                    class="si-input"
+                    class:si-input--err={errors.identifier && touched.identifier}
+                    autocomplete="email"
+                  />
+                </div>
+                {#if errors.identifier && touched.identifier}
+                  <p class="si-err">{errors.identifier}</p>
+                {:else}
+                  <p class="si-hint">Your university or personal email</p>
+                {/if}
+              </div>
+
+              <div class="si-actions">
+                <button type="submit" class="si-btn-next si-btn-next--full">
+                  Continue <ArrowRight size={15} />
+                </button>
+              </div>
+            </form>
+          </div>
+        {/if}
+
+        <!-- ── Step 2: Password ── -->
+        {#if step === 'password'}
+          <div class="si-step-body">
+            <div class="si-welcome-msg">
+              <Fingerprint size={19} />
+              <div>
+                <strong>Verify your identity</strong>
+                <span>Enter your password to continue</span>
+              </div>
+            </div>
+
+            <div class="si-email-badge">
+              <Mail size={13} />
+              <span class="si-badge-email">{formData.identifier}</span>
+              <button type="button" class="si-badge-edit" onclick={goBack}>Edit</button>
+            </div>
+
+            <form onsubmit={handlePasswordSubmit}>
+              <div class="si-field">
+                <div class="si-label-row">
+                  <label class="si-label" for="password">
+                    Password <span class="si-req">*</span>
+                  </label>
+                  <a href="/reset-password" class="si-link si-forgot">Forgot password?</a>
+                </div>
+                <div class="si-input-wrap">
+                  <span class="si-input-icon"><Lock size={15} /></span>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    placeholder="••••••••"
+                    bind:value={formData.password}
+                    onblur={() => { touched.password = true; }}
+                    class="si-input si-input--toggle"
+                    class:si-input--err={errors.password && touched.password}
+                    autocomplete="current-password"
+                  />
+                  <button type="button" class="si-eye-btn"
+                    onclick={() => (showPassword = !showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                    {#if showPassword}<EyeOff size={15} />{:else}<Eye size={15} />{/if}
+                  </button>
+                </div>
+                {#if errors.password && touched.password}
+                  <p class="si-err">{errors.password}</p>
+                {:else}
+                  <p class="si-hint">Minimum 6 characters</p>
+                {/if}
+              </div>
+
+              <label class="si-remember">
+                <input type="checkbox" bind:checked={formData.rememberMe} class="si-checkbox" />
+                <span>Remember me for 30 days</span>
+              </label>
+
+              <div class="si-actions">
+                <button type="button" class="si-btn-back" onclick={goBack}>
+                  <ArrowLeft size={15} /> Back
+                </button>
+                <button type="submit" class="si-btn-next" disabled={isLoading}>
+                  {#if isLoading}
+                    <span class="si-spinner"></span> Signing in…
+                  {:else}
+                    <ShieldCheck size={15} /> Sign in <ArrowRight size={15} />
+                  {/if}
+                </button>
+              </div>
+            </form>
+
+            {#if typeof window !== 'undefined' && window.PublicKeyCredential}
+              <div class="si-passkey-divider"><span>or continue with</span></div>
+              <button type="button" class="si-passkey-btn" disabled={isLoading} onclick={handlePasskeyLogin}>
+                {#if isLoading}
+                  <span class="si-spinner si-spinner--dark"></span>
+                {:else}
+                  <Fingerprint size={17} />
+                  <span>Sign in with Passkey</span>
+                {/if}
+              </button>
+            {/if}
+          </div>
+        {/if}
+
+      </div>
+
+      <p class="si-footer-text">
+        Don't have an account? <a href="/signup" class="si-link">Create one</a>
+      </p>
     </div>
-
-    <button class="google-btn" disabled={isLoading}>
-      <svg viewBox="0 0 24 24" width="18" height="18">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      <span>Continue with Google</span>
-    </button>
-
-    <div class="toggle-mode">
-      <span class="toggle-text">Don't have an account?</span>
-      <a href="/signup" class="toggle-link">Sign up</a>
-    </div>
-  </div>
+  </main>
 </div>
 
 <style>
-  .auth-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    background: var(--bg-primary);
+  /* Inherit body styles from layout.css - no font override needed */
+  
+  .si-page { display: flex; min-height: 100vh; background: var(--bg-primary); }
+  .si-page--hidden { opacity: 0; pointer-events: none; }
+
+/* ── Theme-aware Left Brand Panel ── */
+  .si-panel { 
+    display: none; 
+    position: relative; 
+    width: 440px; 
+    flex-shrink: 0; 
+    overflow: hidden; 
+    background: linear-gradient(145deg, var(--purple-primary-dark), #4C1D95); 
+    color: white; 
+  }
+  @media (min-width: 1024px) { 
+    .si-panel { display: flex; } 
   }
 
-  .auth-card {
-    max-width: 440px;
-    width: 100%;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px 32px;
-    transition: all 0.2s;
+  .si-panel-inner { 
+    position: relative; 
+    z-index: 2; 
+    display: flex; 
+    flex-direction: column; 
+    padding: 2.5rem; 
+    height: 100%; 
   }
 
-  .auth-header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .logo-mark {
-    width: 40px;
-    height: 40px;
-    background: var(--purple-primary);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-  }
-
-  .logo-mark svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .logo-text {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-accent) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .auth-title {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
-
-  .auth-subtitle {
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-
-  .message {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    margin-bottom: 24px;
-    font-size: 14px;
-  }
-
-  .message.error {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: #ef4444;
-  }
-
-  .message.success {
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    color: #22c55e;
-  }
-
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .form-label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-  }
-
-  .input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .input-icon {
+  .si-panel-glow {
     position: absolute;
-    left: 14px;
-    color: var(--text-muted);
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(167, 139, 250, 0.25), transparent 60%);
     pointer-events: none;
-  }
-
-  .form-input {
-    width: 100%;
-    padding: 12px 12px 12px 42px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    font-size: 14px;
-    color: var(--text-primary);
-    transition: all 0.15s;
-  }
-
-  .form-input:focus {
-    outline: none;
-    border-color: var(--purple-primary);
-  }
-
-  .form-input:disabled {
+    z-index: 1;
     opacity: 0.6;
-    cursor: not-allowed;
   }
 
-  .password-toggle {
-    position: absolute;
-    right: 14px;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
+  .si-logo-link { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 10px; 
+    text-decoration: none; 
+    margin-bottom: 2.5rem; 
+    transition: opacity 0.2s; 
+  }
+  .si-logo-link:hover { opacity: 0.9; }
+
+  .si-logo-mark { 
+    width: 42px; 
+    height: 42px; 
+    border: 1px solid rgba(255,255,255,0.25); 
+    border-radius: 12px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: white; 
+    flex-shrink: 0; 
+    background: rgba(255,255,255,0.08);
+  }
+  .si-logo-mark svg { width: 22px; height: 22px; }
+
+  .si-wordmark { 
+    font-size: 20px; 
+    font-weight: 800; 
+    letter-spacing: -0.04em; 
+    color: white; 
   }
 
-  .password-toggle:hover {
-    color: var(--text-secondary);
+  .si-panel-badge { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    padding: 0.375rem 0.875rem; 
+    border: 1px solid rgba(255,255,255,0.2); 
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px; 
+    font-size: 0.75rem; 
+    color: #e0d4ff; 
+    margin-bottom: 1.5rem; 
+    width: fit-content; 
   }
 
-  .forgot-link {
-    text-align: right;
+  .si-panel-headline { 
+    font-size: 2.5rem; 
+    font-weight: 700; 
+    line-height: 1.2; 
+    color: white; 
+    margin-bottom: 1rem; 
+  }
+  .si-panel-headline em { 
+    color: #c4b5fd; 
+    font-style: italic; 
   }
 
-  .forgot-link a {
-    font-size: 12px;
-    color: var(--purple-primary);
-    text-decoration: none;
+  .si-panel-desc { 
+    font-size: 0.875rem; 
+    line-height: 1.65; 
+    color: rgba(224, 212, 255, 0.85); 
+    margin-bottom: 2rem; 
   }
 
-  .forgot-link a:hover {
-    text-decoration: underline;
+  .si-features { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.875rem; 
+    margin-bottom: auto; 
   }
 
-  .submit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 20px;
-    background: var(--purple-primary);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-top: 8px;
+  .si-feature-card { 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 0.875rem; 
+    padding: 0.875rem 1rem; 
+    border-radius: 1rem; 
+    background: rgba(255,255,255,0.06);
+    transition: background 0.2s; 
+  }
+  .si-feature-card:hover { 
+    background: rgba(255,255,255,0.12); 
   }
 
-  .submit-btn:hover:not(:disabled) {
-    background: var(--purple-primary-dark, #6d28d9);
-    transform: scale(0.98);
+  .si-feature-icon { 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 10px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #c4b5fd; 
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0; 
   }
 
-  .submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  .si-feature-card strong { 
+    display: block; 
+    font-size: 0.813rem; 
+    font-weight: 600; 
+    color: white; 
+    margin-bottom: 0.2rem; 
+  }
+  .si-feature-card span { 
+    font-size: 0.75rem; 
+    color: rgba(224, 212, 255, 0.75); 
+    line-height: 1.4; 
   }
 
-  .loading-spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
+  .si-panel-footer { 
+    margin-top: 2rem; 
+    padding-top: 1.5rem; 
+    border-top: 1px solid rgba(255,255,255,0.15); 
   }
 
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+  .si-avatars { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 0.625rem; 
+  }
+  .si-avatar { 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    border: 2px solid rgba(255,255,255,0.2); 
+    margin-left: -7px; 
+  }
+  .si-avatar:first-child { margin-left: 0; }
+  .si-avatar-count { 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    background: rgba(255,255,255,0.15); 
+    border: 2px solid rgba(255,255,255,0.2); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 0.625rem; 
+    font-weight: 700; 
+    color: white; 
+    margin-left: -7px; 
+  }
+  .si-panel-footer p { 
+    font-size: 0.688rem; 
+    color: rgba(224, 212, 255, 0.7); 
   }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 24px 0;
+  /* Mobile logo in dark mode */
+  .si-wordmark.dark { 
+    color: var(--text-primary); 
   }
+  
+  /* ── Main ── */
+  .si-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; min-height: 100vh; background: var(--bg-primary); }
+  .si-form-shell { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 1.5rem; }
 
-  .divider-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+  .si-back-home { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 100px; padding: 0.5rem 1rem; font-size: 0.813rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; width: fit-content; }
+  .si-back-home:hover { border-color: var(--purple-primary); color: var(--purple-primary); background: var(--purple-light); transform: translateX(-2px); }
 
-  .divider-text {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
+  .si-mobile-brand { display: none; align-items: center; gap: 8px; justify-content: center; }
+  @media (max-width: 1023px) { .si-mobile-brand { display: flex; } }
 
-  .google-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 20px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .si-form-header { text-align: center; }
+  .si-form-title { font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+  .si-form-subtitle { font-size: 0.875rem; color: var(--text-secondary); }
 
-  .google-btn:hover:not(:disabled) {
-    background: var(--bg-secondary);
-    border-color: var(--purple-accent);
-  }
+  .si-card { border-radius: 1.5rem; border: 1px solid var(--border); background: var(--bg-secondary); padding: clamp(1.25rem, 5vw, 2rem); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); }
 
-  .toggle-mode {
-    text-align: center;
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
+  /* Stepper */
+  .si-steps { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.75rem; }
+  .si-step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: all 0.3s ease; }
+  .si-step-dot.active { background: var(--purple-primary); width: 24px; border-radius: 4px; box-shadow: 0 0 0 3px var(--purple-light); }
+  .si-step-dot.done { background: var(--purple-primary); }
+  .si-step-line { flex: 1; height: 2px; background: var(--border); border-radius: 1px; transition: background 0.4s ease; }
+  .si-step-line.filled { background: var(--purple-primary); }
 
-  .toggle-text {
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
+  /* Welcome msg */
+  .si-welcome-msg { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: var(--purple-light); border-radius: 1rem; margin-bottom: 1.5rem; }
+  .si-welcome-msg :global(svg) { color: var(--purple-primary); flex-shrink: 0; }
+  .si-welcome-msg strong { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text-primary); }
+  .si-welcome-msg span { font-size: 0.75rem; color: var(--text-secondary); }
 
-  .toggle-link {
-    background: none;
-    border: none;
-    color: var(--purple-primary);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 6px;
-    text-decoration: none;
-  }
+  /* Alert */
+  .si-alert-error { display: flex; align-items: center; gap: 0.625rem; padding: 0.75rem 1rem; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 0.75rem; color: #ef4444; font-size: 0.813rem; margin-bottom: 1.5rem; }
 
-  .toggle-link:hover {
-    text-decoration: underline;
-  }
+  /* Email badge */
+  .si-email-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 0.875rem; background: var(--purple-light); border: 1px solid var(--purple-accent); border-radius: 0.75rem; margin-bottom: 1.25rem; color: var(--purple-primary); }
+  .si-badge-email { font-size: 0.813rem; font-weight: 500; color: var(--text-primary); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .si-badge-edit { background: none; border: none; font-size: 0.75rem; font-weight: 600; color: var(--purple-primary); cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: background 0.2s; }
+  .si-badge-edit:hover { background: rgba(124,58,237,0.08); }
 
-  @media (max-width: 480px) {
-    .auth-card {
-      padding: 32px 24px;
-    }
+  /* Fields */
+  .si-step-body { display: flex; flex-direction: column; }
+  .si-field { display: flex; flex-direction: column; gap: 0.375rem; margin-bottom: 1.125rem; }
+  .si-label-row { display: flex; align-items: center; justify-content: space-between; }
+  .si-label { font-size: 0.813rem; font-weight: 600; color: var(--text-secondary); }
+  .si-req { color: var(--purple-primary); }
+  .si-hint { font-size: 0.688rem; color: var(--text-muted); }
+  .si-forgot { font-size: 0.75rem; }
 
-    .auth-title {
-      font-size: 24px;
-    }
+  .si-input-wrap { position: relative; }
+  .si-input-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); display: flex; align-items: center; pointer-events: none; }
+  .si-input { width: 100%; padding: 0.75rem 0.875rem 0.75rem 2.625rem; border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; outline: none; }
+  .si-input:hover { border-color: var(--purple-accent); }
+  .si-input:focus { border-color: var(--purple-primary); box-shadow: 0 0 0 3px var(--purple-light); }
+  .si-input--err { border-color: #ef4444; background: rgba(239,68,68,0.05); }
+  .si-input--toggle { padding-right: 2.75rem; }
+
+  .si-eye-btn { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 0.25rem; transition: color 0.2s; display: flex; }
+  .si-eye-btn:hover { color: var(--purple-primary); }
+  .si-err { font-size: 0.75rem; color: #ef4444; }
+
+  .si-remember { display: flex; align-items: center; gap: 0.5rem; font-size: 0.813rem; color: var(--text-secondary); cursor: pointer; margin-bottom: 1.5rem; }
+  .si-checkbox { width: 16px; height: 16px; accent-color: var(--purple-primary); cursor: pointer; flex-shrink: 0; }
+
+  /* Buttons */
+  .si-actions { display: flex; gap: 0.75rem; align-items: center; }
+  .si-btn-back { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.75rem 1.125rem; background: var(--bg-primary); border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+  .si-btn-back:hover { border-color: var(--purple-primary); color: var(--purple-primary); background: var(--purple-light); transform: translateX(-2px); }
+
+  .si-btn-next { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8125rem 1.25rem; background: var(--purple-primary); color: white; border: none; border-radius: 0.75rem; font-size: 0.9375rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .si-btn-next:hover:not(:disabled) { background: var(--purple-primary-dark); transform: translateY(-2px); }
+  .si-btn-next:active:not(:disabled) { transform: translateY(0); }
+  .si-btn-next:disabled { opacity: 0.65; cursor: not-allowed; }
+  .si-btn-next--full { width: 100%; }
+
+  /* Passkey */
+  .si-passkey-divider { position: relative; text-align: center; margin: 1.25rem 0 1rem; }
+  .si-passkey-divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: var(--border); }
+  .si-passkey-divider span { position: relative; background: var(--bg-secondary); padding: 0 0.75rem; font-size: 0.75rem; color: var(--text-muted); }
+  .si-passkey-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 0.625rem; padding: 0.8125rem 1.25rem; background: var(--bg-primary); border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: all 0.2s; }
+  .si-passkey-btn:hover { border-color: var(--purple-primary); background: var(--purple-light); color: var(--purple-primary); transform: translateY(-1px); }
+
+  .si-link { color: var(--purple-primary); font-weight: 500; text-decoration: none; }
+  .si-link:hover { text-decoration: underline; }
+  .si-footer-text { text-align: center; font-size: 0.875rem; color: var(--text-secondary); }
+
+  .si-spinner { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0; }
+  .si-spinner--dark { border-color: rgba(124,58,237,0.25); border-top-color: var(--purple-primary); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 640px) {
+    .si-main { padding: 1.5rem 1rem; align-items: flex-start; }
+    .si-form-shell { gap: 1.25rem; }
+    .si-card { border-radius: 1.25rem; padding: 1.25rem; }
+    .si-actions { flex-direction: column-reverse; }
+    .si-btn-back, .si-btn-next { width: 100%; justify-content: center; }
+    .si-back-home { font-size: 0.75rem; padding: 0.375rem 0.875rem; }
   }
 </style>

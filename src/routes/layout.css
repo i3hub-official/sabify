@@ -7,8 +7,8 @@
 /* CSS Variables for theming */
 :root {
   /* Light mode (default) */
-  --purple-primary: #7C3AED;
-  --purple-primary-dark: #6D28D9;
+  --purple-primary: #6D28D9;
+  --purple-primary-dark: #7C3AED;
   --purple-light: #F6F3FF;
   --purple-accent: #A78BFA;
   
@@ -30,8 +30,8 @@
 
 /* Dark mode */
 html.dark {
-  --purple-primary: #8B5CF6;
-  --purple-primary-dark: #7C3AED;
+  --purple-primary: #7C3AED;
+  --purple-primary-dark: #8B5CF6;
   --purple-light: #2D2B3E;
   --purple-accent: #A78BFA;
   
@@ -51,10 +51,23 @@ html.dark {
   --warning: #FBBF24;
 }
 
-* {
+/* Reset */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Force full width on body and html */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;           /* Prevents accidental horizontal scroll */
 }
 
 body {
@@ -67,4 +80,9 @@ body {
 /* Smooth theme transition */
 html, body, * {
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+section, footer {
+  background: var(--bg-primary); 
+  color: var(--text-primary);
 }

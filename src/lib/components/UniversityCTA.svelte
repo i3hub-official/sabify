@@ -48,7 +48,7 @@
   function handleGetStarted() {
     if (!selectedUniversity) return;
     // Navigate to register with university pre-selected
-    window.location.href = `/register?university=${selectedUniversity.id}`;
+    window.location.href = `/signup?university=${selectedUniversity.id}`;
   }
 
   // Close dropdown when clicking outside
