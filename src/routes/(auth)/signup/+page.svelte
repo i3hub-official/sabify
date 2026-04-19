@@ -135,13 +135,28 @@
     }
   }
 
+   // ─── Extract ref from QR data ─────────────────────────────────────
+  // QR codes from MOUAU encode a full URL like:
+  // https://apis.backend.mouau.edu.ng/api/printable-receipt?transaction_ref=090909090909
+  // We only need the number after transaction_ref=
+  function extractRef(raw: string): string {
+    try {
+      const url = new URL(raw);
+      const ref = url.searchParams.get('transaction_ref');
+      if (ref) return ref.trim();
+    } catch {
+      // Not a URL — fall through and return raw value as-is
+    }
+    return raw.trim();
+  }
+ 
   // ─── MOUAU receipt fetch ──────────────────────────────────────────
   async function fetchReceipt() {
     if (!mouauMatric.trim()) {
       errorMessage = 'Please enter your matric number first.';
       return;
     }
-    const ref = refNumber.trim();
+    const ref = extractRef(refNumber.trim());
     if (!ref) {
       errorMessage = 'Please enter or scan the receipt ref number.';
       return;
@@ -153,15 +168,15 @@
       const res = await fetch(`/api/receipt?ref=${encodeURIComponent(ref)}`);
       if (!res.ok) throw new Error('Failed');
       const data = await res.json();
-
+ 
       if (data.matricNo && !data.matricNo.replace(/\//g, '').includes(mouauMatric.replace(/\//g, '').trim())) {
         errorMessage = 'Matric number does not match this receipt. Please check and try again.';
         return;
       }
-
+ 
       receiptData    = data;
       receiptFetched = true;
-
+ 
       if (data.name) {
         const parts = (data.name as string).trim().split(/\s+/);
         surname   = parts.slice(2).join(' ');
@@ -178,7 +193,7 @@
       qrLoading = false;
     }
   }
-
+ 
   // ─── QR from gallery upload ───────────────────────────────────────
   async function handleQrUpload(e: Event) {
     const file = (e.target as HTMLInputElement).files?.[0];
@@ -198,7 +213,8 @@
       const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const code = jsQR(imgData.data, imgData.width, imgData.height);
       if (code?.data) {
-        refNumber = code.data;
+        // Store the extracted ref number, not the raw URL
+        refNumber = extractRef(code.data);
         await fetchReceipt();
       } else {
         errorMessage = 'Could not read QR code. Please enter the ref number manually.';
@@ -207,7 +223,7 @@
       errorMessage = 'Failed to process image. Try again or enter the ref manually.';
     }
   }
-
+ 
   // ─── Webcam QR scanner ────────────────────────────────────────────
   async function startWebcam() {
     if (!mouauMatric.trim()) {
@@ -229,7 +245,7 @@
       camError = 'Camera access denied. Please allow camera access or upload an image instead.';
     }
   }
-
+ 
   function startScanLoop() {
     scanCanvas = document.createElement('canvas');
     scanInterval = setInterval(() => {
@@ -242,12 +258,13 @@
       const code = jsQR(imgData.data, imgData.width, imgData.height);
       if (code?.data) {
         stopWebcam();
-        refNumber = code.data;
+        // Store the extracted ref number, not the raw URL
+        refNumber = extractRef(code.data);
         fetchReceipt();
       }
     }, 300);
   }
-
+  
   function stopWebcam() {
     if (scanInterval) clearInterval(scanInterval);
     if (camStream)    camStream.getTracks().forEach(t => t.stop());
