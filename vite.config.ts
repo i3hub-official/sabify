@@ -52,7 +52,7 @@ export default defineConfig({
 
       workbox: {
         // Pre-cache all SvelteKit build assets
-        globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
 
         // Don't cache API routes or server routes
         navigateFallback: '/',
