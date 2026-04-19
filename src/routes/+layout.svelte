@@ -1,22 +1,42 @@
-<!-- src/layout.svelte -->
-
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { Sun, Moon } from 'lucide-svelte';
 	
 	let { children } = $props();
 	
-	let theme: 'light' | 'dark' = 'light';
+	// Use $state for reactive state in Svelte 5
+	let theme: 'light' | 'dark' = $state('light');
+	
+	// Apply theme immediately before mount
+	function getInitialTheme(): 'light' | 'dark' {
+		// Check if we're in the browser
+		if (typeof window !== 'undefined') {
+			const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+			if (savedTheme) return savedTheme;
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			return prefersDark ? 'dark' : 'light';
+		}
+		return 'light';
+	}
+	
+	// Apply theme synchronously before render
+	const initialTheme = getInitialTheme();
+	theme = initialTheme;
+	
+	// Apply to document immediately (runs before first paint)
+	if (typeof document !== 'undefined') {
+		document.documentElement.classList.remove('light', 'dark');
+		document.documentElement.classList.add(initialTheme);
+	}
 	
 	onMount(() => {
-		// Load saved theme
-		const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-		
-		theme = savedTheme || (prefersDark ? 'dark' : 'light');
-		applyTheme(theme);
+		// Update meta theme-color after mount
+		const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+		if (metaThemeColor) {
+			metaThemeColor.setAttribute('content', theme === 'dark' ? '#1E1B2E' : '#7C3AED');
+		}
 	});
 	
 	function applyTheme(newTheme: 'light' | 'dark') {
@@ -42,244 +62,173 @@
 	<link rel="apple-touch-icon" href="/icons/icon-192.png" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="theme-color" content="#7C3AED" />
 </svelte:head>
 
+<!-- NAVIGATION (from landing page) -->
 <nav class="nav">
-	<div class="nav-container">
-		<div class="logo">
-			<span class="logo-icon">⚔️</span>
-			<span class="logo-text">Sabify</span>
-			<span class="logo-badge">β</span>
-		</div>
+	<div class="nav-inner">
+		<a href="/" class="nav-brand">
+			<div class="logo-mark" aria-hidden="true">
+				<svg viewBox="0 0 20 20" fill="none">
+					<path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+					<path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</div>
+			<span class="brand-name">Sabify</span>
+		</a>
+
 		<div class="nav-links">
 			<a href="#vault">Vault</a>
 			<a href="#pay">Pay</a>
 			<a href="#shield">Shield</a>
-			<a href="#contributors">Contributors</a>
+			<a href="#universities">Universities</a>
 		</div>
+
 		<div class="nav-actions">
+			<a href="/signin" class="btn-ghost-nav">Sign in</a>
+			<a href="/signup" class="btn-primary-nav">Get started</a>
 			<button class="theme-toggle" on:click={toggleTheme} aria-label="Toggle theme">
 				{#if theme === 'light'}
-					<span class="theme-icon">🌙</span>
+					<Sun size={18} />
 				{:else}
-					<span class="theme-icon">☀️</span>
+					<Moon size={18} />
 				{/if}
 			</button>
-			<button class="btn-outline">Sign In (MOUAU)</button>
 		</div>
 	</div>
 </nav>
 
 {@render children()}
 
-<footer class="footer">
-	<div class="footer-container">
-		<div class="footer-brand">
-			<span class="logo-icon">⚔️</span>
-			<span class="logo-text">Sabify</span>
-			<p class="tagline">Not by might, but by Sabify.</p>
-		</div>
-		<div class="footer-links">
-			<div class="footer-col">
-				<h4>Product</h4>
-				<a href="#vault">Knowledge Vault</a>
-				<a href="#pay">Sabify Pay</a>
-				<a href="#shield">Sabify Shield</a>
-			</div>
-			<div class="footer-col">
-				<h4>Campus</h4>
-				<a href="#">MOUAU</a>
-				<a href="#">UNN (Coming)</a>
-				<a href="#">UI (Coming)</a>
-			</div>
-			<div class="footer-col">
-				<h4>Legal</h4>
-				<a href="#">Privacy</a>
-				<a href="#">Terms</a>
-				<a href="#">Data Security</a>
-			</div>
-		</div>
-	</div>
-	<div class="footer-bottom">
-		<p>Built for Nigerian students. 🇳🇬</p>
-	</div>
-</footer>
-
 <style>
 	.nav {
 		position: sticky;
 		top: 0;
+		z-index: 100;
 		background: var(--bg-primary);
 		border-bottom: 1px solid var(--border);
-		backdrop-filter: blur(12px);
-		z-index: 50;
+		backdrop-filter: blur(8px);
 	}
-
-	.nav-container {
-		max-width: 1280px;
+	
+	.nav-inner {
+		max-width: 1100px;
 		margin: 0 auto;
-		padding: 1rem 2rem;
+		padding: 0 28px;
+		height: 60px;
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
-		align-items: center;
 	}
-
-	.logo {
+	
+	.nav-brand {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 1.5rem;
-		font-weight: 700;
+		gap: 10px;
+		text-decoration: none;
 	}
-
-	.logo-icon {
-		font-size: 1.75rem;
-	}
-
-	.logo-text {
-		background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-accent) 100%);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
-	}
-
-	.logo-badge {
+	
+	.logo-mark {
+		width: 34px;
+		height: 34px;
 		background: var(--purple-primary);
-		font-size: 0.7rem;
-		padding: 0.2rem 0.5rem;
-		border-radius: 999px;
-		font-weight: 500;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
 		color: white;
 	}
-
+	
+	.logo-mark svg {
+		width: 19px;
+		height: 19px;
+	}
+	
+	.brand-name {
+		font-weight: 800;
+		font-size: 18px;
+		letter-spacing: -0.04em;
+		color: var(--text-primary);
+	}
+	
 	.nav-links {
 		display: flex;
-		gap: 2rem;
+		gap: 24px;
 	}
-
+	
 	.nav-links a {
+		font-size: 14px;
+		font-weight: 500;
 		color: var(--text-secondary);
 		text-decoration: none;
-		transition: color 0.2s;
+		transition: color 0.15s;
 	}
-
+	
 	.nav-links a:hover {
-		color: var(--purple-primary);
+		color: var(--text-primary);
 	}
-
+	
 	.nav-actions {
 		display: flex;
-		gap: 1rem;
+		gap: 8px;
 		align-items: center;
 	}
-
+	
 	.theme-toggle {
 		background: var(--bg-secondary);
 		border: 1px solid var(--border);
 		border-radius: 999px;
-		width: 40px;
-		height: 40px;
+		width: 36px;
+		height: 36px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		font-size: 1.25rem;
 		transition: all 0.2s;
+		color: var(--text-secondary);
 	}
-
+	
 	.theme-toggle:hover {
 		background: var(--purple-light);
 		border-color: var(--purple-primary);
-	}
-
-	.btn-outline {
-		background: transparent;
-		border: 1px solid var(--purple-primary);
 		color: var(--purple-primary);
-		padding: 0.5rem 1.25rem;
-		border-radius: 999px;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.2s;
 	}
-
-	.btn-outline:hover {
-		background: var(--purple-primary);
-		color: white;
-	}
-
-	.footer {
-		background: var(--bg-secondary);
-		padding: 3rem 2rem 1rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.footer-container {
-		max-width: 1200px;
-		margin: 0 auto;
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: 3rem;
-	}
-
-	.footer-brand .logo-text {
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
-
-	.tagline {
-		margin-top: 0.5rem;
-		font-size: 0.875rem;
-		color: var(--text-muted);
-	}
-
-	.footer-links {
-		display: flex;
-		gap: 4rem;
-		flex-wrap: wrap;
-	}
-
-	.footer-col h4 {
-		margin-bottom: 1rem;
-		font-size: 0.875rem;
+	
+	.btn-ghost-nav {
+		font-size: 14px;
+		font-weight: 500;
 		color: var(--text-secondary);
-	}
-
-	.footer-col a {
-		display: block;
-		color: var(--text-muted);
 		text-decoration: none;
-		font-size: 0.875rem;
-		margin-bottom: 0.5rem;
-		transition: color 0.2s;
+		padding: 8px 16px;
+		border: 1px solid var(--border);
+		border-radius: 10px;
+		transition: border-color 0.15s, background 0.15s;
 	}
-
-	.footer-col a:hover {
-		color: var(--purple-primary);
+	
+	.btn-ghost-nav:hover {
+		background: var(--bg-secondary);
+		border-color: var(--purple-accent);
 	}
-
-	.footer-bottom {
-		text-align: center;
-		margin-top: 3rem;
-		padding-top: 1rem;
-		border-top: 1px solid var(--border);
-		color: var(--text-muted);
-		font-size: 0.875rem;
+	
+	.btn-primary-nav {
+		font-size: 14px;
+		font-weight: 700;
+		color: white;
+		text-decoration: none;
+		padding: 8px 16px;
+		background: var(--purple-primary);
+		border-radius: 10px;
+		transition: background 0.15s;
 	}
-
+	
+	.btn-primary-nav:hover {
+		background: var(--purple-primary-dark, #6d28d9);
+	}
+	
 	@media (max-width: 768px) {
 		.nav-links {
 			display: none;
-		}
-		
-		.footer-container {
-			flex-direction: column;
-			text-align: center;
-		}
-		
-		.footer-links {
-			justify-content: center;
 		}
 	}
 </style>
