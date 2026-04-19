@@ -13,7 +13,10 @@ const config = {
   },
 
   kit: {
-    adapter: adapter()
+    adapter: adapter(),
+    serviceWorker: {
+      register: true, // This tells SvelteKit to register the SW automatically
+    }
      }
 };
 
