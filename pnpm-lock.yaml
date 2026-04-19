@@ -52,7 +52,7 @@ importers:
         specifier: ^6.3.3
         version: 6.3.3(@sveltejs/kit@2.57.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.0.0(svelte@5.55.4(@typescript-eslint/types@8.58.2))(vite@8.0.8(@types/node@22.19.17)(jiti@2.6.1)(terser@5.46.1)))(svelte@5.55.4(@typescript-eslint/types@8.58.2))(typescript@6.0.3)(vite@8.0.8(@types/node@22.19.17)(jiti@2.6.1)(terser@5.46.1)))(rollup@2.80.0)
       '@sveltejs/kit':
-        specifier: ^2.57.0
+        specifier: ^2.57.1
         version: 2.57.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.0.0(svelte@5.55.4(@typescript-eslint/types@8.58.2))(vite@8.0.8(@types/node@22.19.17)(jiti@2.6.1)(terser@5.46.1)))(svelte@5.55.4(@typescript-eslint/types@8.58.2))(typescript@6.0.3)(vite@8.0.8(@types/node@22.19.17)(jiti@2.6.1)(terser@5.46.1))
       '@sveltejs/vite-plugin-svelte':
         specifier: ^7.0.0
@@ -115,7 +115,7 @@ importers:
         specifier: ^8.58.1
         version: 8.58.2(eslint@10.2.1(jiti@2.6.1))(typescript@6.0.3)
       vite:
-        specifier: ^8.0.7
+        specifier: ^8.0.8
         version: 8.0.8(@types/node@22.19.17)(jiti@2.6.1)(terser@5.46.1)
       vite-plugin-pwa:
         specifier: ^1.2.0
