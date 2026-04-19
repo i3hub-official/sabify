@@ -82,12 +82,12 @@
 </svelte:head>
 
 <!-- PWA update toast -->
-{#if $needRefresh}
+<!-- {#if $needRefresh}
 	<div class="pwa-toast">
 		<span>A new version of Sabify is available.</span>
 		<button on:click={() => updateServiceWorker(true)}>Update now</button>
 	</div>
-{/if}
+{/if} -->
 
 <!-- Full Edge-to-Edge Navigation -->
 <nav class="nav">
