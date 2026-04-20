@@ -30,7 +30,7 @@
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .slice(0, 60);
-    return `/src/lib/data/uni-icons/${slug}.png`;
+    return `/uni-icons/${slug}.png`;
   }
 
   function selectUniversity(uni: University) {
