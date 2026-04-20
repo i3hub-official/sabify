@@ -6,48 +6,52 @@
 
 /* ─── Variables ─────────────────────────────────────── */
 :root {
-  /* Light mode (default) */
-  --purple-primary: #6a2c91;
+  /* Light mode */
+  --purple-primary:      #6a2c91;
   --purple-primary-dark: #4b1d68;
-  --purple-light: #c4b5fd;
-  --purple-accent: #A78BFA;
-  
-  --bg-primary: #FFFFFF;
+  --purple-light:        #f3e8ff;   /* pale lavender fill — text stays readable */
+  --purple-light-border: #e0d4f5;   /* subtle border inside purple-light zones */
+  --purple-accent:       #A78BFA;
+  --purple-on-light:     #6a2c91;   /* icon/text colour ON purple-light bg */
+
+  --bg-primary:   #FFFFFF;
   --bg-secondary: #F9FAFB;
-  --bg-tertiary: #F3F4F6;
-  
-  --text-primary: #111827;
+  --bg-tertiary:  #F3F4F6;
+
+  --text-primary:   #111827;
   --text-secondary: #4B5563;
-  --text-muted: #6B7280;
-  
-  --border: #E5E7EB;
+  --text-muted:     #6B7280;
+
+  --border:       #E5E7EB;
   --border-light: #F3F4F6;
-  
+
   --success: #10B981;
-  --error: #EF4444;
+  --error:   #EF4444;
   --warning: #F59E0B;
 }
 
 html.dark {
   /* Dark mode */
-  --purple-primary: #4b1d68;
-  --purple-primary-dark: #6a2c91;
-  --purple-light: #2D2B3E;
-  --purple-accent: #A78BFA;
-  
-  --bg-primary: #1E1B2E;
+  --purple-primary:      #9f6bc4;   /* lighter so it's visible on dark surfaces */
+  --purple-primary-dark: #c4a0e0;   /* hover state — even lighter */
+  --purple-light:        #2a1f3d;   /* dark tinted surface, NOT the same as bg-secondary */
+  --purple-light-border: #3d2d5a;   /* border inside purple-light zones */
+  --purple-accent:       #c4a0e0;
+  --purple-on-light:     #c4a0e0;   /* icon/text colour ON purple-light bg in dark mode */
+
+  --bg-primary:   #1E1B2E;
   --bg-secondary: #2D2B3E;
-  --bg-tertiary: #3A3652;
-  
-  --text-primary: #F9FAFB;
+  --bg-tertiary:  #3A3652;
+
+  --text-primary:   #F9FAFB;
   --text-secondary: #D1D5DB;
-  --text-muted: #9CA3AF;
-  
-  --border: #3A3652;
+  --text-muted:     #9CA3AF;
+
+  --border:       #3A3652;
   --border-light: #2D2B3E;
-  
+
   --success: #34D399;
-  --error: #F87171;
+  --error:   #F87171;
   --warning: #FBBF24;
 }
 
@@ -68,9 +72,7 @@ html, body {
   font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
-/* ─── Components Refactored for Sabify ──────────────── */
-
-/* Auth Components */
+/* ─── Auth Components ───────────────────────────────── */
 .auth-layout {
   min-height: 100vh;
   display: flex;
@@ -108,7 +110,7 @@ html, body {
 .auth-input:focus {
   outline: none;
   border-color: var(--purple-primary);
-  box-shadow: 0 0 0 3px rgba(106,44,145,0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--purple-primary) 15%, transparent);
 }
 
 .auth-label {
@@ -119,7 +121,7 @@ html, body {
   margin-bottom: 0.375rem;
 }
 
-/* Buttons */
+/* ─── Buttons ───────────────────────────────────────── */
 .btn-primary, .auth-btn-submit {
   background: var(--purple-primary);
   color: #FFFFFF;
@@ -139,7 +141,7 @@ html, body {
   transform: translateY(-1px);
 }
 
-/* Landing Page Layouts */
+/* ─── Landing Page ──────────────────────────────────── */
 .sb-nav {
   position: sticky;
   top: 0;
@@ -167,11 +169,12 @@ html, body {
   border-color: var(--purple-accent);
 }
 
-/* ─── Scrollbar & Utilities ───────────────────────── */
+/* ─── Scrollbar ─────────────────────────────────────── */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
 ::-webkit-scrollbar-thumb { background: var(--purple-primary); border-radius: 10px; }
 
+/* ─── Utilities ─────────────────────────────────────── */
 .text-gradient {
   background: linear-gradient(135deg, var(--purple-accent) 0%, var(--purple-primary) 100%);
   -webkit-background-clip: text;

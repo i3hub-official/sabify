@@ -6,7 +6,7 @@
     BookOpen, FileText, ClipboardList, CreditCard, QrCode,
     Bell, Footprints, Calendar, Megaphone, Layers,
     ArrowRight, File, DollarSign, AlertTriangle,
-    Library, Building2, GraduationCap
+    Library, Building2, GraduationCap, Sparkles, ShieldCheck, Zap
   } from 'lucide-svelte';
   import UniversityCTA from '$lib/components/UniversityCTA.svelte';
 
@@ -18,17 +18,18 @@
 <svelte:head>
   <title>Sabify — Not by might, but by Sabify</title>
   <meta name="description" content="The academic platform for Nigerian and West African university students. Past questions, departmental dues, campus safety, events, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <!-- ── HERO ─────────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-badge">
-      <span class="badge-dot" aria-hidden="true"></span>
+      <Sparkles size={13} />
       <span>Launching across West Africa</span>
     </div>
 
-    
     <h1 class="hero-title">
       Not by might,<br />
       <em>but by Sabify.</em>
@@ -238,12 +239,10 @@
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <div class="logo-mark logo-mark-sm" aria-hidden="true">
+      <div class="logo-mark" aria-hidden="true">
         <svg viewBox="0 0 20 20" fill="none">
-          <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
-            stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M7 10.5L9.5 13L13.5 8"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <div>
@@ -261,16 +260,11 @@
 </footer>
 
 <style>
-  /* Inherit body styles from layout.css */
-  :root {
-    --radius-card: 20px;
-    --radius-sm: 12px;
-  }
-
   /* ── Hero ──────────────────────────────────────────── */
   .hero { 
     padding: 88px 28px 80px; 
     text-align: center; 
+    background: var(--bg-primary);
   }
   .hero-inner { max-width: 760px; margin: 0 auto; }
 
@@ -279,36 +273,27 @@
     align-items: center; 
     gap: 8px;
     background: var(--purple-light); 
-    border: 1px solid var(--purple-accent);
-    border-radius: 999px; 
-    padding: 5px 14px; 
+    border: 1px solid var(--border);
+    border-radius: 100px; 
+    padding: 6px 14px; 
     margin-bottom: 32px;
     font-size: 13px; 
     font-weight: 500; 
     color: var(--purple-primary);
   }
-  .badge-dot {
-    width: 6px; 
-    height: 6px; 
-    border-radius: 50%;
-    background: var(--purple-primary); 
-    animation: pulse 2.5s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
   .hero-title {
-    font-weight: 900; 
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-weight: 400;
     font-size: clamp(44px, 6vw, 70px);
-    letter-spacing: -0.045em; 
+    letter-spacing: -0.03em; 
     line-height: 1.05;
     color: var(--text-primary); 
     margin-bottom: 20px;
   }
   .hero-title em {
-    font-style: normal; 
+    font-style: italic; 
     color: var(--purple-primary);
-    font-weight: 400; 
-    font-size: 1.02em;
   }
   .hero-subtitle {
     font-size: 18px; 
@@ -328,39 +313,41 @@
     display: inline-flex; 
     align-items: center; 
     gap: 8px;
-    padding: 13px 24px; 
-    border-radius: var(--radius-sm);
+    padding: 12px 28px; 
+    border-radius: 12px;
     font-size: 15px; 
-    font-weight: 700; 
+    font-weight: 600; 
     text-decoration: none;
     background: var(--purple-primary); 
     color: white;
-    transition: background 0.15s, transform 0.1s;
+    transition: background 0.2s, transform 0.1s;
   }
   .btn-primary:hover { 
-    background: var(--purple-primary-dark, #6d28d9); 
+    background: var(--purple-primary-dark); 
+    transform: translateY(-1px);
   }
   .btn-primary:active { 
-    transform: scale(0.98); 
+    transform: translateY(0); 
   }
 
   .btn-secondary {
     display: inline-flex; 
     align-items: center; 
     gap: 8px;
-    padding: 12px 24px; 
-    border-radius: var(--radius-sm);
+    padding: 11px 28px; 
+    border-radius: 12px;
     font-size: 15px; 
     font-weight: 600; 
     text-decoration: none;
     background: transparent; 
     color: var(--text-secondary);
     border: 1.5px solid var(--border); 
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.2s, background 0.2s;
   }
   .btn-secondary:hover { 
-    border-color: var(--purple-accent); 
-    background: var(--bg-secondary); 
+    border-color: var(--purple-primary); 
+    background: var(--purple-light); 
+    color: var(--purple-primary);
   }
 
   /* ── Layout ────────────────────────────────────────── */
@@ -370,31 +357,31 @@
     padding: 0 28px; 
   }
 
-  /* Removed border-top from all sections */
   .section { 
     padding: 80px 0; 
-    /* border-top removed */
+    border-top: 1px solid var(--border);
   }
+  .section:first-of-type { border-top: none; }
 
   .section-header { 
     margin-bottom: 48px; 
   }
 
   .section-label {
-    font-family: 'SF Mono', 'Menlo', monospace; 
-    font-size: 11px; 
-    font-weight: 500;
+    font-size: 12px; 
+    font-weight: 600;
     color: var(--purple-primary); 
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase; 
     margin-bottom: 12px;
   }
 
   .section-title {
-    font-weight: 800; 
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-weight: 400;
     font-size: clamp(28px, 3.5vw, 42px);
-    letter-spacing: -0.03em; 
-    line-height: 1.1;
+    letter-spacing: -0.02em; 
+    line-height: 1.15;
     color: var(--text-primary); 
     margin-bottom: 14px;
   }
@@ -410,92 +397,89 @@
   .problems-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    gap: 16px; 
+    gap: 20px; 
   }
   .three-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 16px; 
+    gap: 20px; 
   }
   .two-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    gap: 16px; 
+    gap: 20px; 
   }
 
   /* ── Cards ─────────────────────────────────────────── */
   .problem-card, .feature-card {
     background: var(--bg-secondary); 
     border: 1px solid var(--border);
-    border-radius: var(--radius-card); 
+    border-radius: 20px; 
     padding: 28px;
     transition: border-color 0.2s, transform 0.2s;
   }
   .problem-card:hover, .feature-card:hover { 
     border-color: var(--purple-accent); 
-    transform: translateY(-2px); 
+    transform: translateY(-3px); 
   }
 
   .feature-card.center { text-align: center; }
   .card-icon { 
     color: var(--purple-primary); 
-    margin-bottom: 16px; 
+    margin-bottom: 18px; 
     display: flex; 
   }
   .card-icon-center { justify-content: center; }
 
   .problem-card h3, .feature-card h3 {
-    font-size: 17px; 
+    font-size: 18px; 
     font-weight: 700; 
     letter-spacing: -0.015em;
     color: var(--text-primary); 
-    margin-bottom: 8px; 
+    margin-bottom: 10px; 
     line-height: 1.3;
   }
   .problem-card p, .feature-card p {
     font-size: 14px; 
     color: var(--text-secondary); 
     line-height: 1.6; 
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .feature-card p { margin-bottom: 0; }
 
   .problem-tag, .example-tag {
     display: inline-block; 
-    font-family: 'SF Mono', 'Menlo', monospace; 
     font-size: 11px; 
-    font-weight: 500;
+    font-weight: 600;
     color: var(--purple-primary); 
     background: var(--purple-light); 
-    padding: 4px 10px; 
-    border-radius: 6px;
+    padding: 5px 12px; 
+    border-radius: 8px;
   }
   .example-tag {
-    padding: 5px 12px; 
-    border-radius: 8px; 
-    margin-top: 4px;
+    margin-top: 12px;
+    display: inline-block;
   }
 
   /* Type symbols */
   .type-sym {
-    font-family: 'SF Mono', 'Menlo', monospace; 
-    font-size: 12px; 
-    font-weight: 600;
-    padding: 2px 6px; 
-    border-radius: 5px; 
+    font-size: 11px; 
+    font-weight: 700;
+    padding: 2px 7px; 
+    border-radius: 6px; 
     vertical-align: middle; 
-    margin-left: 4px;
+    margin-left: 6px;
   }
   .type-t { background: var(--purple-light); color: var(--purple-primary); }
-  .type-a { background: #fefce8; color: #854d0e; }
-  .type-b { background: #eff6ff; color: #1d4ed8; }
+  .type-a { background: #fef3c7; color: #b45309; }
+  .type-b { background: #dbeafe; color: #1e40af; }
 
-  :global(.dark) .type-a { background: #2d2400; color: #fbbf24; }
-  :global(.dark) .type-b { background: #0c1a2e; color: #60a5fa; }
+  :global(.dark) .type-a { background: #451a03; color: #fbbf24; }
+  :global(.dark) .type-b { background: #1e3a5f; color: #93c5fd; }
 
   /* ── Footer ────────────────────────────────────────── */
   .footer { 
-    padding: 32px 0 24px; 
+    padding: 40px 0 32px; 
     background: var(--bg-primary); 
     border-top: 1px solid var(--border); 
   }
@@ -504,16 +488,27 @@
     align-items: center; 
     justify-content: space-between; 
     flex-wrap: wrap; 
-    gap: 16px; 
+    gap: 20px; 
   }
   .footer-brand { 
     display: flex; 
     align-items: center; 
-    gap: 12px; 
+    gap: 14px; 
   }
+  .logo-mark {
+    width: 40px;
+    height: 40px;
+    background: var(--purple-primary);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  .logo-mark svg { width: 20px; height: 20px; }
   .footer-name { 
     font-weight: 800; 
-    font-size: 15px; 
+    font-size: 16px; 
     letter-spacing: -0.03em; 
     color: var(--text-primary); 
   }
@@ -521,22 +516,21 @@
     font-style: italic; 
     font-size: 12px; 
     color: var(--text-muted); 
-    margin-top: 1px; 
+    margin-top: 2px; 
   }
   .footer-links { 
     display: flex; 
-    gap: 20px; 
+    gap: 24px; 
   }
   .footer-links a { 
     font-size: 13px; 
     color: var(--text-muted); 
     text-decoration: none; 
     font-weight: 500; 
-    transition: color 0.15s; 
+    transition: color 0.2s; 
   }
-  .footer-links a:hover { color: var(--text-primary); }
+  .footer-links a:hover { color: var(--purple-primary); }
   .footer-legal { 
-    font-family: 'SF Mono', 'Menlo', monospace; 
     font-size: 11px; 
     color: var(--text-muted); 
   }
@@ -547,10 +541,12 @@
     .section { padding: 56px 0; }
     .problems-grid, .three-grid, .two-grid { 
       grid-template-columns: 1fr; 
+      gap: 16px;
     }
     .footer-inner { 
       flex-direction: column; 
       align-items: flex-start; 
     }
+    .container { padding: 0 20px; }
   }
 </style>

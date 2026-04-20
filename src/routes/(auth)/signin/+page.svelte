@@ -260,7 +260,6 @@
   .si-page { display: flex; min-height: 100vh; background: var(--bg-primary); }
   .si-page--hidden { opacity: 0; pointer-events: none; }
 
-  /* Panel — intentionally stays deep purple in both themes as brand anchor */
   .si-panel { display: none; position: relative; width: 440px; flex-shrink: 0; background: linear-gradient(160deg, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%); overflow: hidden; }
   @media (min-width: 1024px) { .si-panel { display: flex; } }
   .si-panel-inner { position: relative; z-index: 2; display: flex; flex-direction: column; padding: 2.5rem; height: 100%; }
@@ -297,12 +296,11 @@
   .si-avatar-count { width: 30px; height: 30px; border-radius: 50%; background: rgba(106,44,145,0.4); border: 2px solid #2d1b4e; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; font-weight: 700; color: white; margin-left: -7px; }
   .si-panel-footer p { font-size: 0.688rem; color: rgba(196,181,253,0.65); }
 
-  /* Form side — all themed */
   .si-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; min-height: 100vh; background: var(--bg-primary); }
   .si-form-shell { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 1.5rem; }
 
   .si-back-home { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 100px; padding: 0.5rem 1rem; font-size: 0.813rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; width: fit-content; }
-  .si-back-home:hover { border-color: var(--purple-primary); color: var(--purple-primary); background: var(--purple-light); transform: translateX(-2px); }
+  .si-back-home:hover { border-color: var(--purple-primary); color: var(--purple-on-light); background: var(--purple-light); transform: translateX(-2px); }
 
   .si-mobile-brand { display: none; align-items: center; gap: 8px; justify-content: center; }
   @media (max-width: 1023px) { .si-mobile-brand { display: flex; } }
@@ -321,15 +319,15 @@
   .si-step-line.filled { background: var(--purple-primary-dark); }
 
   .si-welcome-msg { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: var(--purple-light); border-radius: 1rem; margin-bottom: 1.5rem; }
-  .si-welcome-msg :global(svg) { color: var(--purple-primary); flex-shrink: 0; }
+  .si-welcome-msg :global(svg) { color: var(--purple-on-light); flex-shrink: 0; }
   .si-welcome-msg strong { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text-primary); }
   .si-welcome-msg span { font-size: 0.75rem; color: var(--text-secondary); }
 
   .si-alert-error { display: flex; align-items: center; gap: 0.625rem; padding: 0.75rem 1rem; background: color-mix(in srgb, var(--error) 10%, transparent); border: 1px solid color-mix(in srgb, var(--error) 30%, transparent); border-radius: 0.75rem; color: var(--error); font-size: 0.813rem; margin-bottom: 1.5rem; }
 
-  .si-email-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 0.875rem; background: var(--purple-light); border: 1px solid var(--border); border-radius: 0.75rem; margin-bottom: 1.25rem; color: var(--purple-primary); }
+  .si-email-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 0.875rem; background: var(--purple-light); border: 1px solid var(--purple-light-border); border-radius: 0.75rem; margin-bottom: 1.25rem; color: var(--purple-on-light); }
   .si-badge-email { font-size: 0.813rem; font-weight: 500; color: var(--text-primary); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .si-badge-edit { background: none; border: none; font-size: 0.75rem; font-weight: 600; color: var(--purple-primary); cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: background 0.2s; }
+  .si-badge-edit { background: none; border: none; font-size: 0.75rem; font-weight: 600; color: var(--purple-on-light); cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: background 0.2s; }
   .si-badge-edit:hover { background: color-mix(in srgb, var(--purple-primary) 12%, transparent); }
 
   .si-step-body { display: flex; flex-direction: column; }
@@ -357,7 +355,7 @@
 
   .si-actions { display: flex; gap: 0.75rem; align-items: center; }
   .si-btn-back { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.75rem 1.125rem; background: var(--bg-primary); border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
-  .si-btn-back:hover { border-color: var(--purple-primary); color: var(--purple-primary); background: var(--purple-light); transform: translateX(-2px); }
+  .si-btn-back:hover { border-color: var(--purple-primary); color: var(--purple-on-light); background: var(--purple-light); transform: translateX(-2px); }
 
   .si-btn-next { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8125rem 1.25rem; background: var(--purple-primary); color: white; border: none; border-radius: 0.75rem; font-size: 0.9375rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px color-mix(in srgb, var(--purple-primary) 35%, transparent); transition: all 0.2s; }
   .si-btn-next:hover:not(:disabled) { background: var(--purple-primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--purple-primary) 45%, transparent); }
@@ -369,7 +367,7 @@
   .si-passkey-divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: var(--border); }
   .si-passkey-divider span { position: relative; background: var(--bg-secondary); padding: 0 0.75rem; font-size: 0.75rem; color: var(--text-muted); }
   .si-passkey-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 0.625rem; padding: 0.8125rem 1.25rem; background: var(--bg-primary); border: 1.5px solid var(--border); border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: all 0.2s; }
-  .si-passkey-btn:hover { border-color: var(--purple-primary); background: var(--purple-light); color: var(--purple-primary); transform: translateY(-1px); }
+  .si-passkey-btn:hover { border-color: var(--purple-primary); background: var(--purple-light); color: var(--purple-on-light); transform: translateY(-1px); }
 
   .si-link { color: var(--purple-primary); font-weight: 500; text-decoration: none; }
   .si-link:hover { text-decoration: underline; }
