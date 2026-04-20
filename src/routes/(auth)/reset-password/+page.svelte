@@ -125,15 +125,14 @@
 
   <div class="rp-shell">
 
-    <a href="/" class="rp-logo-link">
-      <div class="rp-logo-mark">
-        <svg viewBox="0 0 20 20" fill="none">
-          <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+     <div class="si-mobile-brand">
+        <div class="si-logo-mark sm">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
       </div>
-      <span class="rp-wordmark">Sabify</span>
-    </a>
 
     <!-- ── SUCCESS ── -->
     {#if success}
@@ -347,14 +346,9 @@
     gap: 1.5rem;
   }
 
-  .rp-logo-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .rp-logo-link:hover { opacity: 0.85; }
+  .rp-logo-link { display:inline-block; line-height:0; transition:opacity .2s; }
+  .rp-logo-link:hover { opacity:.8; }
+  .rp-logo { width:72px; height:72px; object-fit:contain; }
 
   .rp-logo-mark {
     width: 48px;

@@ -52,18 +52,6 @@
   <aside class="fp-panel">
     <div class="fp-panel-inner">
 
-      <a href="/" class="fp-logo-link">
-        <div class="fp-logo-mark">
-          <svg viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M7 10.5L9.5 13L13.5 8"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="fp-wordmark">Sabify</span>
-      </a>
-
       <div class="fp-panel-hero">
         <div class="fp-panel-badge"><Sparkles size={13} /><span>Account Recovery</span></div>
         <h2 class="fp-panel-headline">We've got<br/><em>your back.</em></h2>
@@ -119,7 +107,6 @@
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="fp-wordmark inline">Sabify</span>
       </div>
 
       <div class="fp-form-header">
@@ -238,8 +225,11 @@
   .fp-panel-glow { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(106,44,145,0.25) 0%, transparent 70%); pointer-events: none; }
 
   /* Logo */
-  .fp-logo-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 2.5rem; transition: opacity 0.2s; }
-  .fp-logo-link:hover { opacity: 0.85; }
+
+ .rp-logo-link { display:inline-block; line-height:0; transition:opacity .2s; }
+  .rp-logo-link:hover { opacity:.8; }
+  .rp-logo { width:72px; height:72px; object-fit:contain; }
+
   .fp-logo-mark { width: 42px; height: 42px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
   .fp-logo-mark svg { width: 22px; height: 22px; }
   .fp-logo-mark.sm { width: 36px; height: 36px; border-radius: 10px; background: var(--purple-primary); border-color: transparent; color: white; }

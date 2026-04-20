@@ -323,7 +323,6 @@
   <title>Sign up — Sabify</title>
   <meta name="description" content="Create your Sabify account. Join the future of campus life." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <svelte:window on:click={(e) => {
@@ -336,15 +335,7 @@
   <!-- ── Left brand panel ─────────────────────────────────────────── -->
   <aside class="si-panel">
     <div class="si-panel-inner">
-      <a href="/" class="si-logo-link">
-        <div class="si-logo-mark">
-          <svg viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="si-wordmark">Sabify</span>
-      </a>
+    
       <div class="si-panel-hero">
         <div class="si-panel-badge"><Sparkles size={13} /><span>Join the movement</span></div>
         <h2 class="si-panel-headline">Your campus,<br/><em>reimagined.</em></h2>
@@ -393,7 +384,6 @@
             <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="si-wordmark inline">Sabify</span>
       </div>
 
       <div class="si-form-header">

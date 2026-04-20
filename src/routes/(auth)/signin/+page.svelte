@@ -94,16 +94,7 @@
 
   <aside class="si-panel">
     <div class="si-panel-inner">
-      <a href="/" class="si-logo-link">
-        <div class="si-logo-mark">
-          <svg viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="si-wordmark">Sabify</span>
-      </a>
-      <div class="si-panel-hero">
+     <div class="si-panel-hero">
         <div class="si-panel-badge"><Sparkles size={13} /><span>Welcome back</span></div>
         <h2 class="si-panel-headline">Your campus,<br/><em>in your pocket.</em></h2>
         <p class="si-panel-desc">Past questions, dues, safety alerts — one place for every Nigerian student.</p>
@@ -150,7 +141,6 @@
             <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="si-wordmark inline">Sabify</span>
       </div>
 
       <div class="si-form-header">
@@ -276,8 +266,10 @@
   .si-panel-inner { position: relative; z-index: 2; display: flex; flex-direction: column; padding: 2.5rem; height: 100%; }
   .si-panel-glow { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(106,44,145,0.25) 0%, transparent 70%); pointer-events: none; }
 
-  .si-logo-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 2.5rem; transition: opacity 0.2s; }
-  .si-logo-link:hover { opacity: 0.85; }
+  .rp-logo-link { display:inline-block; line-height:0; transition:opacity .2s; }
+  .rp-logo-link:hover { opacity:.8; }
+  .rp-logo { width:72px; height:72px; object-fit:contain; }
+
   .si-logo-mark { width: 42px; height: 42px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
   .si-logo-mark svg { width: 22px; height: 22px; }
   .si-logo-mark.sm { width: 36px; height: 36px; border-radius: 10px; background: var(--purple-primary); border-color: transparent; color: white; }

@@ -1,25 +1,51 @@
-// Run: node scripts/generate-icons.js
-// You need sharp: pnpm add -D sharp
-
 import sharp from 'sharp';
 import fs from 'fs';
+import path from 'path';
 
-const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#7C3AED"/>
-  <text x="50" y="68" font-size="50" text-anchor="middle" fill="white" font-family="Arial">⚔️</text>
-</svg>`;
+// Using your specified path
+const SOURCE_IMAGE = 'static/icons/sb_logo.png'; 
+const TARGET_DIR = 'static/icons';
+const sizes = [72, 96, 128, 144, 152, 180, 192, 384, 512];
 
-const svgBuffer = Buffer.from(svg);
+async function generateIcons() {
+    console.log(`🚀 Starting icon generation from: ${SOURCE_IMAGE}`);
 
-if (!fs.existsSync('static/icons')) {
-  fs.mkdirSync('static/icons', { recursive: true });
+    if (!fs.existsSync(SOURCE_IMAGE)) {
+        console.error(`❌ Error: Source image "${SOURCE_IMAGE}" not found.`);
+        return;
+    }
+
+    if (!fs.existsSync(TARGET_DIR)) {
+        fs.mkdirSync(TARGET_DIR, { recursive: true });
+    }
+
+    try {
+        // Initialize sharp once
+        const pipeline = sharp(SOURCE_IMAGE);
+
+        const generationPromises = sizes.map(async (size) => {
+            const outputPath = path.join(TARGET_DIR, `icon-${size}.png`);
+            
+            await pipeline
+                .clone()
+                .trim() // Automatically removes any existing white/transparent borders
+                .resize(size, size, {
+                    fit: 'contain',
+                    // alpha: 0 makes the background 100% transparent
+                    background: { r: 0, g: 0, b: 0, alpha: 0 } 
+                })
+                .png()
+                .toFile(outputPath);
+                
+            console.log(`✅ Generated: ${outputPath}`);
+        });
+
+        await Promise.all(generationPromises);
+        console.log('\x1b[32m%s\x1b[0m', 'Done! Your transparent PWA icons are ready.');
+
+    } catch (error) {
+        console.error('An error occurred during generation:', error);
+    }
 }
 
-for (const size of sizes) {
-  await sharp(svgBuffer)
-    .resize(size, size)
-    .png()
-    .toFile(`static/icons/icon-${size}.png`);
-  console.log(`Generated icon-${size}.png`);
-}
+generateIcons();

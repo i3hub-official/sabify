@@ -60,7 +60,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href="/favicon.svg" />
+	<link rel="icon" href="/favicon.png" />
 	<meta name="theme-color" content="#7C3AED" />
 
 		<link rel="apple-touch-icon" href="/icons/icon-192.png" />
@@ -81,23 +81,6 @@
 <nav class="nav">
 	<div class="nav-inner">
 		<a href="/" class="nav-brand">
-			<div class="logo-mark" aria-hidden="true">
-				<svg viewBox="0 0 20 20" fill="none">
-					<path
-						d="M10 2L17 6V11C17 15.5 13.5 18.5 10 19C6.5 18.5 3 15.5 3 11V6L10 2Z"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linejoin="round"
-					/>
-					<path
-						d="M7 10.5L9.5 13L13.5 8"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</div>
 			<span class="brand-name">Sabify</span>
 		</a>
 
@@ -192,7 +175,7 @@ body {
     }
 }
 
-		.nav-brand {
+	.nav-brand {
 		display: flex;
 		align-items: center;
 		gap: 10px;
@@ -202,8 +185,6 @@ body {
 	.logo-mark {
 		width: 34px;
 		height: 34px;
-		background: var(--purple-primary);
-		border-radius: 10px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -211,12 +192,7 @@ body {
 		color: white;
 	}
 
-	.logo-mark svg {
-		width: 19px;
-		height: 19px;
-	}
-
-	.brand-name {
+		.brand-name {
 		font-weight: 800;
 		font-size: 19px;
 		letter-spacing: -0.04em;
