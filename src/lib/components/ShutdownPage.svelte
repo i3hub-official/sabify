@@ -20,8 +20,7 @@
           <path d="M7 10.5L9.5 13L13.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <span>Sabify</span>
-    </div>
+        </div>
 
     <!-- Icon -->
     <div class="icon-wrap" aria-hidden="true">
