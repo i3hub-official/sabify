@@ -19,7 +19,6 @@
   <title>Sabify — Not by might, but by Sabify</title>
   <meta name="description" content="The academic platform for Nigerian and West African university students. Past questions, departmental dues, campus safety, events, and more." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <!-- ── HERO ─────────────────────────────────────────────────────── -->

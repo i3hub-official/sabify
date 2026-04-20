@@ -69,7 +69,6 @@ html, body {
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.2s ease, color 0.2s ease;
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 /* ─── Auth Components ───────────────────────────────── */

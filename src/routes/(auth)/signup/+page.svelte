@@ -385,8 +385,6 @@
 
 <svelte:head>
 	<title>Sign up — Sabify</title>
-	<meta name="description" content="Create your Sabify account. Join the future of campus life." />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
 </svelte:head>
 
 <svelte:window
