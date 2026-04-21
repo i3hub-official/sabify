@@ -253,12 +253,12 @@
           <p class="ov-otp-hint">Enter each digit — auto-submits when complete</p>
 
           <!-- Verify button (manual submit fallback) -->
-          <button
-            type="button"
-            class="ov-btn-primary"
-            on:click={handleVerify}
-            disabled={isLoading || !otpFull}
-          >
+         <button
+  type="button"
+  class="ov-btn-primary"
+  onclick={handleVerify}
+  disabled={isLoading || !otpFull}
+>
             {#if isLoading}
               <span class="ov-spinner"></span> Verifying…
             {:else}
@@ -276,7 +276,7 @@
                 Resend in {cooldown}s
               </span>
             {:else}
-              <button type="button" class="ov-resend-btn" on:click={resendCode} disabled={isResending}>
+              <button type="button" class="ov-resend-btn" onclick={resendCode} disabled={isResending}>
                 {#if isResending}
                   <span class="ov-mini-spinner"></span> Sending…
                 {:else}

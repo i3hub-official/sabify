@@ -60,7 +60,7 @@
   }
 </script>
 
-<svelte:window on:click={handleClickOutside} />
+<svelte:window onclick={handleClickOutside} />
 
 <section class="cta">
   <div class="container cta-inner">
@@ -103,7 +103,7 @@
             <button
               type="button"
               class="clear-btn"
-              on:click={clearUniversity}
+              onclick={clearUniversity}
               aria-label="Clear university selection"
             >
               <svg viewBox="0 0 14 14" fill="none" width="14" height="14">
@@ -122,7 +122,7 @@
                 class="dropdown-item"
                 role="option"
                 aria-selected={selectedUniversity?.id === uni.id}
-                on:click={() => selectUniversity(uni)}
+                onclick={() => selectUniversity(uni)}
               >
                 <span class="dropdown-acronym">{uni.acronym}</span>
                 <span class="dropdown-name">{uni.name}</span>
@@ -169,7 +169,7 @@
       <button
         class="btn-primary"
         disabled={!selectedUniversity}
-        on:click={handleGetStarted}
+        onclick={handleGetStarted}
       >
         {selectedUniversity ? `Get started at ${selectedUniversity.acronym} →` : 'Get started →'}
       </button>

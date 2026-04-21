@@ -87,7 +87,7 @@
 		<div class="nav-actions">
 			<a href="/signin" class="btn-ghost-nav">Sign in</a>
 			<a href="/signup" class="btn-primary-nav">Get started</a>
-			<button class="theme-toggle" on:click={toggleTheme} aria-label="Toggle theme">
+			<button class="theme-toggle" onclick={toggleTheme} aria-label="Toggle theme">
 				{#if theme === 'light'}
 					<Sun size={18} />
 				{:else}

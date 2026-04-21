@@ -412,7 +412,7 @@ async function handleQrUpload(e: Event) {
 </svelte:head>
 
 <svelte:window
-	on:click={(e) => {
+	onclick={(e) => {
 		if (!(e.target as HTMLElement).closest('.university-search')) showDropdown = false;
 	}}
 />
@@ -549,7 +549,7 @@ async function handleQrUpload(e: Event) {
 										autocomplete="off"
 									/>
 									{#if selectedUniversity}
-										<button type="button" class="si-clear-btn" on:click={clearUniversity}
+										<button type="button" class="si-clear-btn" onclick={clearUniversity}
 											><X size={15} /></button
 										>
 									{/if}
@@ -560,7 +560,7 @@ async function handleQrUpload(e: Event) {
 											<button
 												type="button"
 												class="si-dropdown-item"
-												on:click={() => selectUniversity(uni)}
+												onclick={() => selectUniversity(uni)}
 											>
 												<span class="si-dropdown-acronym">{uni.acronym}</span>
 												<span class="si-dropdown-name">{uni.name}</span>
@@ -630,7 +630,7 @@ async function handleQrUpload(e: Event) {
 										<button
 											type="button"
 											class="si-scan-btn"
-											on:click={startWebcam}
+											onclick={startWebcam}
 											disabled={!mouauMatric.trim()}
 										>
 											<Camera size={15} /> Live camera
@@ -661,7 +661,7 @@ async function handleQrUpload(e: Event) {
 											<div class="si-scan-reticle"></div>
 										</div>
 										<p class="si-webcam-hint">Point at the QR code on your school fee receipt</p>
-										<button type="button" class="si-stop-cam-btn" on:click={stopWebcam}>
+										<button type="button" class="si-stop-cam-btn" onclick={stopWebcam}>
 											<X size={14} /> Cancel
 										</button>
 									</div>
@@ -694,7 +694,7 @@ async function handleQrUpload(e: Event) {
 											<button
 												type="button"
 												class="si-inline-fetch-btn"
-												on:click={() => fetchReceipt(false)}
+												onclick={() => fetchReceipt(false)}
 												disabled={!refNumber.trim() || !mouauMatric.trim()}
 											>
 												Fetch
@@ -704,7 +704,7 @@ async function handleQrUpload(e: Event) {
 											<button
 												type="button"
 												class="si-ref-clear-btn"
-												on:click={() => {
+												onclick={() => {
 													refNumber = '';
 													refMasked = false;
 													receiptData = null;
@@ -742,7 +742,7 @@ async function handleQrUpload(e: Event) {
 						<button
 							type="button"
 							class="si-btn-next si-btn-next--full"
-							on:click={nextStep}
+							onclick={nextStep}
 							disabled={isLoading}
 						>
 							Continue <ArrowRight size={15} />
@@ -792,7 +792,7 @@ async function handleQrUpload(e: Event) {
 								<button
 									type="button"
 									class="si-rescan-link"
-									on:click={() => {
+									onclick={() => {
 										receiptFetched = false;
 										clearPrefilled();
 										currentStep = 1;
@@ -961,10 +961,10 @@ async function handleQrUpload(e: Event) {
 						</div>
 
 						<div class="si-actions">
-							<button type="button" class="si-btn-back" on:click={prevStep}>
+							<button type="button" class="si-btn-back" onclick={prevStep}>
 								<ChevronLeft size={15} /> Back
 							</button>
-							<button type="button" class="si-btn-next" on:click={nextStep} disabled={isLoading}>
+							<button type="button" class="si-btn-next" onclick={nextStep} disabled={isLoading}>
 								Continue <ArrowRight size={15} />
 							</button>
 						</div>
@@ -994,7 +994,7 @@ async function handleQrUpload(e: Event) {
 								<button
 									type="button"
 									class="si-eye-btn"
-									on:click={() => (showPassword = !showPassword)}
+									onclick={() => (showPassword = !showPassword)}
 								>
 									{#if showPassword}<EyeOff size={15} />{:else}<Eye size={15} />{/if}
 								</button>
@@ -1019,7 +1019,7 @@ async function handleQrUpload(e: Event) {
 								<button
 									type="button"
 									class="si-eye-btn"
-									on:click={() => (showConfirmPassword = !showConfirmPassword)}
+									onclick={() => (showConfirmPassword = !showConfirmPassword)}
 								>
 									{#if showConfirmPassword}<EyeOff size={15} />{:else}<Eye size={15} />{/if}
 								</button>
@@ -1027,13 +1027,13 @@ async function handleQrUpload(e: Event) {
 						</div>
 
 						<div class="si-actions">
-							<button type="button" class="si-btn-back" on:click={prevStep} disabled={isLoading}>
+							<button type="button" class="si-btn-back" onclick={prevStep} disabled={isLoading}>
 								<ChevronLeft size={15} /> Back
 							</button>
 							<button
 								type="button"
 								class="si-btn-next si-btn-submit"
-								on:click={handleSubmit}
+								onclick={handleSubmit}
 								disabled={isLoading}
 							>
 								{#if isLoading}
