@@ -1,3 +1,6 @@
+// src/routes/api/receipt/+server.ts
+
+
 import type { RequestHandler } from '@sveltejs/kit';
 import axios from 'axios';
 import * as cheerio from 'cheerio';

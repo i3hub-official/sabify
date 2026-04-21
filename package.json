@@ -17,8 +17,7 @@
 		"db:studio": "prisma studio",
 		"db:seed": "prisma seed",
 		"db:reset": "prisma migrate reset",
-		"db:push": "prisma db push",
-		"postinstall": "prisma generate"
+		"db:push": "prisma db push"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.4",

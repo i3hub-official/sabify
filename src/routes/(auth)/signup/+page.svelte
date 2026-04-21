@@ -43,6 +43,9 @@
 	let errorMessage = $state('');
 	let successMessage = $state('');
 
+	// ─── Flag to suppress onRefInput reset during programmatic updates ──
+let settingFromScan = $state(false);
+
 	// Step 1 – University
 	let selectedUniversity = $state<University | null>(null);
 	let searchQuery = $state('');
@@ -152,29 +155,47 @@
 	}
 
 	function onRefInput() {
-		// If user types manually after a masked scan, unmask and reset
-		refMasked = false;
-		if (receiptFetched) {
-			receiptData = null;
-			receiptFetched = false;
-			clearPrefilled();
-		}
-	}
+  // Ignore reactive triggers caused by scan/upload setting refNumber
+  if (settingFromScan) return;
+
+  const val = refNumber.trim();
+  const looksLikeUrl =
+    val.startsWith('http://') ||
+    val.startsWith('https://') ||
+    val.includes('transaction_ref=');
+  if (looksLikeUrl) return;
+
+  refMasked = false;
+  if (receiptFetched) {
+    receiptData = null;
+    receiptFetched = false;
+    clearPrefilled();
+  }
+}
 
 	// ─── Extract ref from QR data ─────────────────────────────────────
 	// MOUAU QR codes encode a full URL like:
 	// https://apis.backend.mouau.edu.ng/api/printable-receipt?transaction_ref=090909090909
 	// We only want the number after transaction_ref=
-	function extractRef(raw: string): string {
-		try {
-			const url = new URL(raw);
-			const ref = url.searchParams.get('transaction_ref');
-			if (ref) return ref.trim();
-		} catch {
-			// Not a URL — return raw value as-is
-		}
-		return raw.trim();
-	}
+function extractRef(raw: string): string {
+  const trimmed = raw.trim();
+
+  // Case 1: full URL
+  try {
+    const u = new URL(trimmed);
+    const ref = u.searchParams.get('transaction_ref');
+    if (ref) return ref.trim();
+  } catch {
+    // Not a full URL, continue
+  }
+
+  // Case 2: bare query param (e.g. pasted "transaction_ref=090909")
+  const match = trimmed.match(/[?&]?transaction_ref=([^&\s]+)/i);
+  if (match) return match[1].trim();
+
+  // Case 3: raw value — return as-is
+  return trimmed;
+}
 
 	// ─── MOUAU receipt fetch ──────────────────────────────────────────
 	// fromScan: when true, auto-advances to step 2 on success and never
@@ -238,34 +259,36 @@
 	}
 
 	// ─── QR from gallery upload ───────────────────────────────────────
-	async function handleQrUpload(e: Event) {
-		const file = (e.target as HTMLInputElement).files?.[0];
-		if (!file) return;
-		if (!mouauMatric.trim()) {
-			errorMessage = 'Please enter your matric number before scanning.';
-			return;
-		}
-		errorMessage = '';
-		try {
-			const bitmap = await createImageBitmap(file);
-			const canvas = document.createElement('canvas');
-			canvas.width = bitmap.width;
-			canvas.height = bitmap.height;
-			const ctx = canvas.getContext('2d')!;
-			ctx.drawImage(bitmap, 0, 0);
-			const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-			const code = jsQR(imgData.data, imgData.width, imgData.height);
-			if (code?.data) {
-				refNumber = extractRef(code.data);
-				// fromScan = true → mask ref, auto-advance on success
-				await fetchReceipt(true);
-			} else {
-				errorMessage = 'Could not read QR code. Please enter the ref number manually.';
-			}
-		} catch {
-			errorMessage = 'Failed to process image. Try again or enter the ref manually.';
-		}
-	}
+// ─── QR from gallery upload ───────────────────────────────────────
+async function handleQrUpload(e: Event) {
+  const file = (e.target as HTMLInputElement).files?.[0];
+  if (!file) return;
+  if (!mouauMatric.trim()) {
+    errorMessage = 'Please enter your matric number before scanning.';
+    return;
+  }
+  errorMessage = '';
+  try {
+    const bitmap = await createImageBitmap(file);
+    const canvas = document.createElement('canvas');
+    canvas.width = bitmap.width;
+    canvas.height = bitmap.height;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(bitmap, 0, 0);
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imgData.data, imgData.width, imgData.height);
+    if (code?.data) {
+      settingFromScan = true;            // ← suppress onRefInput
+      refNumber = extractRef(code.data);
+      settingFromScan = false;
+      await fetchReceipt(true);
+    } else {
+      errorMessage = 'Could not read QR code. Please enter the ref number manually.';
+    }
+  } catch {
+    errorMessage = 'Failed to process image. Try again or enter the ref manually.';
+  }
+}
 
 	// ─── Webcam QR scanner ────────────────────────────────────────────
 	async function startWebcam() {
@@ -302,11 +325,12 @@
 			const imgData = ctx.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
 			const code = jsQR(imgData.data, imgData.width, imgData.height);
 			if (code?.data) {
-				stopWebcam();
-				refNumber = extractRef(code.data);
-				// fromScan = true → mask ref, auto-advance on success
-				fetchReceipt(true);
-			}
+  stopWebcam();
+  settingFromScan = true;              // ← suppress onRefInput
+  refNumber = extractRef(code.data);
+  settingFromScan = false;
+  fetchReceipt(true);
+}
 		}, 300);
 	}
 
