@@ -579,7 +579,7 @@ async function handleQrUpload(e: Event) {
 										<img
 											src={getLogoPath(selectedUniversity)}
 											alt={selectedUniversity.acronym}
-											on:error={() => (logoError = true)}
+											onerror={() => (logoError = true)}
 										/>
 									{:else}
 										<span class="si-uni-initials">{selectedUniversity.acronym.slice(0, 2)}</span>
@@ -642,7 +642,7 @@ async function handleQrUpload(e: Event) {
 												accept="image/*"
 												class="sr-only"
 												disabled={!mouauMatric.trim()}
-												on:change={handleQrUpload}
+												onchange={handleQrUpload}
 											/>
 										</label>
 									</div>
@@ -769,7 +769,7 @@ async function handleQrUpload(e: Event) {
 										<img
 											src={getLogoPath(selectedUniversity)}
 											alt=""
-											on:error={() => (logoError = true)}
+											onerror={() => (logoError = true)}
 										/>
 									{:else}
 										<span class="si-uni-initials sm">{selectedUniversity.acronym.slice(0, 2)}</span>

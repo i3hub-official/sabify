@@ -143,7 +143,7 @@
               <img
                 src={getLogoPath(selectedUniversity)}
                 alt={selectedUniversity.acronym}
-                on:error={() => (logoError = true)}
+                onerror={() => (logoError = true)}
               />
             {:else}
               <span
