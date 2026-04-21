@@ -1,17 +1,13 @@
-import type { auth } from "$lib/server/auth";
+// src/app.d.ts
+import type { Session } from '$lib/server/auth';
 
 declare global {
-    namespace App {
-        // interface Error {}
-        interface Locals {
-            // Better-Auth types for SvelteKit
-            user: typeof auth.$Infer.Session.user | null;
-            session: typeof auth.$Infer.Session.session | null;
-        }
-        // interface PageData {}
-        // interface PageState {}
-        // interface Platform {}
+  namespace App {
+    interface Locals {
+      user:    Session['user']    | null;
+      session: Session['session'] | null;
     }
+  }
 }
 
 export {};

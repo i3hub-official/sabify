@@ -8,4 +8,20 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/User.ts'
+export type * from './models/Session.ts'
+export type * from './models/Account.ts'
+export type * from './models/Verification.ts'
+export type * from './models/University.ts'
+export type * from './models/College.ts'
+export type * from './models/Department.ts'
+export type * from './models/Course.ts'
+export type * from './models/VaultDocument.ts'
+export type * from './models/PinnedDocument.ts'
+export type * from './models/Submission.ts'
+export type * from './models/CgpaEntry.ts'
+export type * from './models/DepartmentalDue.ts'
+export type * from './models/Payment.ts'
+export type * from './models/SafetyAlert.ts'
+export type * from './models/AlertReceipt.ts'
 export type * from './commonInputTypes.ts'

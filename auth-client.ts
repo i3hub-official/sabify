@@ -1,13 +1,13 @@
 import { createAuthClient } from "better-auth/client";
-import type { auth } from "./\auth.ts";
+import type { auth } from "./auth.ts";
 import {
     inferAdditionalFields,
     twoFactorClient,
     usernameClient,
     magicLinkClient,
-    passkeyClient,
+    // passkeyClient,
     adminClient,
-    apiKeyClient,
+    // apiKeyClient,
     organizationClient,
     multiSessionClient,
 } from "better-auth/client/plugins";
@@ -19,9 +19,9 @@ export const authClient = createAuthClient({
         twoFactorClient(),
         usernameClient(),
         magicLinkClient(),
-        passkeyClient(),
+        // passkeyClient(),
         adminClient(),
-        apiKeyClient(),
+        // apiKeyClient(),
         organizationClient(),
         multiSessionClient(),
     ],

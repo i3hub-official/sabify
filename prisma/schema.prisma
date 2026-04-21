@@ -1,7 +1,15 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// sabify — prisma schema
+// prisma 7.7.0 · better-auth 1.6.4 · postgresql
+//
+// Prisma 7 changes in this file:
+//   • provider = "prisma-client"  (was "prisma-client-js")
+//   • output = "../src/generated/prisma"  (no longer node_modules)
+//   • NO url= in datasource — lives in prisma.config.ts
+//
+// Commands:
+//   pnpm prisma migrate dev --name <name>
+//   pnpm prisma generate
+//   npx auth@latest generate --adapter prisma   ← let better-auth sync its tables
 
 generator client {
   provider = "prisma-client"
@@ -12,4 +20,321 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─────────────────────────────────────────────────────
+// BETTER-AUTH CORE  (v1.6.4)
+// Do not rename these models or their @@map values.
+// Run: npx auth@latest generate --adapter prisma
+// ─────────────────────────────────────────────────────
 
+model User {
+  id            String   @id
+  name          String
+  email         String   @unique
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+
+  sessions Session[]
+  accounts Account[]
+
+  // ── Sabify extensions ──────────────────────────────
+  matricNumber      String? @unique
+  role              Role    @default(STUDENT)
+  level             Int?
+  isVerified        Boolean @default(false)
+  contributorBadge  Boolean @default(false)
+  contributorPoints Int     @default(0)
+
+  departmentId Int?
+  department   Department? @relation(fields: [departmentId], references: [id])
+
+  uploads       VaultDocument[]  @relation("Uploader")
+  submissions   Submission[]
+  payments      Payment[]
+  cgpaEntries   CgpaEntry[]
+  pinnedDocs    PinnedDocument[]
+  alertReceipts AlertReceipt[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+  @@index([userId])
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+  @@index([identifier])
+}
+
+// ─────────────────────────────────────────────────────
+// 1. INSTITUTIONAL HIERARCHY
+// ─────────────────────────────────────────────────────
+
+model University {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logoUrl   String?
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  colleges College[]
+}
+
+model College {
+  id           Int    @id @default(autoincrement())
+  name         String
+  abbreviation String
+  universityId String
+
+  university  University   @relation(fields: [universityId], references: [id])
+  departments Department[]
+}
+
+model Department {
+  id        Int    @id @default(autoincrement())
+  name      String
+  code      String
+  collegeId Int
+
+  college  College           @relation(fields: [collegeId], references: [id])
+  courses  Course[]
+  students User[]
+  dues     DepartmentalDue[]
+}
+
+// ─────────────────────────────────────────────────────
+// 2. VAULT
+// ─────────────────────────────────────────────────────
+
+model Course {
+  id           String @id @default(cuid())
+  code         String
+  title        String
+  level        Int
+  departmentId Int
+
+  department Department      @relation(fields: [departmentId], references: [id])
+  documents  VaultDocument[]
+
+  @@unique([code, departmentId])
+  @@index([departmentId])
+}
+
+model VaultDocument {
+  id            Int         @id @default(autoincrement())
+  title         String
+  category      DocCategory
+  fileUrl       String
+  fileSize      Int?
+  mimeType      String?
+  ocrText       String?
+  isVerified    Boolean     @default(false)
+  downloadCount Int         @default(0)
+  uploadedAt    DateTime    @default(now())
+
+  courseId     String
+  uploadedById String
+
+  course      Course           @relation(fields: [courseId], references: [id])
+  uploader    User             @relation("Uploader", fields: [uploadedById], references: [id])
+  submissions Submission[]
+  pins        PinnedDocument[]
+
+  @@index([courseId])
+  @@index([category])
+}
+
+model PinnedDocument {
+  id         Int      @id @default(autoincrement())
+  pinnedAt   DateTime @default(now())
+  userId     String
+  documentId Int
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document VaultDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, documentId])
+}
+
+model Submission {
+  id          Int              @id @default(autoincrement())
+  status      SubmissionStatus @default(PENDING)
+  note        String?
+  submittedAt DateTime?
+  createdAt   DateTime         @default(now())
+  userId      String
+  documentId  Int
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document VaultDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, documentId])
+}
+
+// ─────────────────────────────────────────────────────
+// 3. CGPA LOG
+// ─────────────────────────────────────────────────────
+
+model CgpaEntry {
+  id           Int      @id @default(autoincrement())
+  courseCode   String
+  courseTitle  String
+  creditUnits  Int
+  grade        String
+  gradePoints  Float
+  semester     Int
+  academicYear String
+  createdAt    DateTime @default(now())
+  userId       String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────
+// 4. FINANCIAL HUB
+// ─────────────────────────────────────────────────────
+
+model DepartmentalDue {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String?
+  amount       Int // kobo — never use floats for money
+  deadline     DateTime?
+  academicYear String
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  departmentId Int
+
+  department Department @relation(fields: [departmentId], references: [id])
+  payments   Payment[]
+
+  @@index([departmentId])
+}
+
+model Payment {
+  id         Int           @id @default(autoincrement())
+  amount     Int // kobo
+  status     PaymentStatus @default(PENDING)
+  reference  String        @unique
+  receiptUrl String?
+  gateway    String? // "paystack" | "flutterwave"
+  paidAt     DateTime?
+  createdAt  DateTime      @default(now())
+  userId     String
+  dueId      Int
+
+  user User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  due  DepartmentalDue @relation(fields: [dueId], references: [id])
+
+  @@index([userId])
+  @@index([dueId])
+}
+
+// ─────────────────────────────────────────────────────
+// 5. SABIFY SHIELD
+// ─────────────────────────────────────────────────────
+
+model SafetyAlert {
+  id        Int           @id @default(autoincrement())
+  title     String
+  content   String
+  severity  AlertSeverity
+  sentAt    DateTime      @default(now())
+  expiresAt DateTime?
+  sentBy    String
+
+  receipts AlertReceipt[]
+}
+
+model AlertReceipt {
+  id         Int       @id @default(autoincrement())
+  readAt     DateTime?
+  receivedAt DateTime  @default(now())
+  alertId    Int
+  userId     String
+
+  alert SafetyAlert @relation(fields: [alertId], references: [id], onDelete: Cascade)
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([alertId, userId])
+}
+
+// ─────────────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────────────
+
+enum Role {
+  STUDENT
+  CONTRIBUTOR
+  DEPT_ADMIN
+  SUPER_ADMIN
+}
+
+enum DocCategory {
+  TEST
+  ASSIGNMENT
+  TEXTBOOK
+}
+
+enum SubmissionStatus {
+  PENDING
+  SUBMITTED
+  RETURNED
+  GRADED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  URGENT
+}

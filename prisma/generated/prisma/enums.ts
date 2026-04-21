@@ -9,7 +9,49 @@
 * 🟢 You can import this file directly.
 */
 
+export const Role = {
+  STUDENT: 'STUDENT',
+  CONTRIBUTOR: 'CONTRIBUTOR',
+  DEPT_ADMIN: 'DEPT_ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const DocCategory = {
+  TEST: 'TEST',
+  ASSIGNMENT: 'ASSIGNMENT',
+  TEXTBOOK: 'TEXTBOOK'
+} as const
+
+export type DocCategory = (typeof DocCategory)[keyof typeof DocCategory]
+
+
+export const SubmissionStatus = {
+  PENDING: 'PENDING',
+  SUBMITTED: 'SUBMITTED',
+  RETURNED: 'RETURNED',
+  GRADED: 'GRADED'
+} as const
+
+export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const AlertSeverity = {
+  INFO: 'INFO',
+  WARNING: 'WARNING',
+  URGENT: 'URGENT'
+} as const
+
+export type AlertSeverity = (typeof AlertSeverity)[keyof typeof AlertSeverity]

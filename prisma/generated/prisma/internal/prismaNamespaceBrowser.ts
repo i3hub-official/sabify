@@ -51,7 +51,22 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  User: 'User',
+  Session: 'Session',
+  Account: 'Account',
+  Verification: 'Verification',
+  University: 'University',
+  College: 'College',
+  Department: 'Department',
+  Course: 'Course',
+  VaultDocument: 'VaultDocument',
+  PinnedDocument: 'PinnedDocument',
+  Submission: 'Submission',
+  CgpaEntry: 'CgpaEntry',
+  DepartmentalDue: 'DepartmentalDue',
+  Payment: 'Payment',
+  SafetyAlert: 'SafetyAlert',
+  AlertReceipt: 'AlertReceipt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +83,248 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  emailVerified: 'emailVerified',
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  matricNumber: 'matricNumber',
+  role: 'role',
+  level: 'level',
+  isVerified: 'isVerified',
+  contributorBadge: 'contributorBadge',
+  contributorPoints: 'contributorPoints',
+  departmentId: 'departmentId'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  expiresAt: 'expiresAt',
+  token: 'token',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  userId: 'userId'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const AccountScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  providerId: 'providerId',
+  userId: 'userId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  idToken: 'idToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope',
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const VerificationScalarFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  value: 'value',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const UniversityScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logoUrl: 'logoUrl',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type UniversityScalarFieldEnum = (typeof UniversityScalarFieldEnum)[keyof typeof UniversityScalarFieldEnum]
+
+
+export const CollegeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  abbreviation: 'abbreviation',
+  universityId: 'universityId'
+} as const
+
+export type CollegeScalarFieldEnum = (typeof CollegeScalarFieldEnum)[keyof typeof CollegeScalarFieldEnum]
+
+
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  collegeId: 'collegeId'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  title: 'title',
+  level: 'level',
+  departmentId: 'departmentId'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const VaultDocumentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  category: 'category',
+  fileUrl: 'fileUrl',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  ocrText: 'ocrText',
+  isVerified: 'isVerified',
+  downloadCount: 'downloadCount',
+  uploadedAt: 'uploadedAt',
+  courseId: 'courseId',
+  uploadedById: 'uploadedById'
+} as const
+
+export type VaultDocumentScalarFieldEnum = (typeof VaultDocumentScalarFieldEnum)[keyof typeof VaultDocumentScalarFieldEnum]
+
+
+export const PinnedDocumentScalarFieldEnum = {
+  id: 'id',
+  pinnedAt: 'pinnedAt',
+  userId: 'userId',
+  documentId: 'documentId'
+} as const
+
+export type PinnedDocumentScalarFieldEnum = (typeof PinnedDocumentScalarFieldEnum)[keyof typeof PinnedDocumentScalarFieldEnum]
+
+
+export const SubmissionScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  note: 'note',
+  submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  documentId: 'documentId'
+} as const
+
+export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+
+
+export const CgpaEntryScalarFieldEnum = {
+  id: 'id',
+  courseCode: 'courseCode',
+  courseTitle: 'courseTitle',
+  creditUnits: 'creditUnits',
+  grade: 'grade',
+  gradePoints: 'gradePoints',
+  semester: 'semester',
+  academicYear: 'academicYear',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type CgpaEntryScalarFieldEnum = (typeof CgpaEntryScalarFieldEnum)[keyof typeof CgpaEntryScalarFieldEnum]
+
+
+export const DepartmentalDueScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  amount: 'amount',
+  deadline: 'deadline',
+  academicYear: 'academicYear',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  departmentId: 'departmentId'
+} as const
+
+export type DepartmentalDueScalarFieldEnum = (typeof DepartmentalDueScalarFieldEnum)[keyof typeof DepartmentalDueScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  status: 'status',
+  reference: 'reference',
+  receiptUrl: 'receiptUrl',
+  gateway: 'gateway',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  dueId: 'dueId'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const SafetyAlertScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  severity: 'severity',
+  sentAt: 'sentAt',
+  expiresAt: 'expiresAt',
+  sentBy: 'sentBy'
+} as const
+
+export type SafetyAlertScalarFieldEnum = (typeof SafetyAlertScalarFieldEnum)[keyof typeof SafetyAlertScalarFieldEnum]
+
+
+export const AlertReceiptScalarFieldEnum = {
+  id: 'id',
+  readAt: 'readAt',
+  receivedAt: 'receivedAt',
+  alertId: 'alertId',
+  userId: 'userId'
+} as const
+
+export type AlertReceiptScalarFieldEnum = (typeof AlertReceiptScalarFieldEnum)[keyof typeof AlertReceiptScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

@@ -17,4 +17,83 @@ import * as Prisma from './internal/prismaNamespaceBrowser.ts'
 export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
-
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
+ * Model Verification
+ * 
+ */
+export type Verification = Prisma.VerificationModel
+/**
+ * Model University
+ * 
+ */
+export type University = Prisma.UniversityModel
+/**
+ * Model College
+ * 
+ */
+export type College = Prisma.CollegeModel
+/**
+ * Model Department
+ * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
+/**
+ * Model VaultDocument
+ * 
+ */
+export type VaultDocument = Prisma.VaultDocumentModel
+/**
+ * Model PinnedDocument
+ * 
+ */
+export type PinnedDocument = Prisma.PinnedDocumentModel
+/**
+ * Model Submission
+ * 
+ */
+export type Submission = Prisma.SubmissionModel
+/**
+ * Model CgpaEntry
+ * 
+ */
+export type CgpaEntry = Prisma.CgpaEntryModel
+/**
+ * Model DepartmentalDue
+ * 
+ */
+export type DepartmentalDue = Prisma.DepartmentalDueModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model SafetyAlert
+ * 
+ */
+export type SafetyAlert = Prisma.SafetyAlertModel
+/**
+ * Model AlertReceipt
+ * 
+ */
+export type AlertReceipt = Prisma.AlertReceiptModel
