@@ -230,25 +230,25 @@
             </div>
           {/if}
 
-          <!-- OTP input boxes -->
-          <div class="ov-otp-row" onpaste={onPaste}>
-            {#each digits as digit, i}
-              <input
-                type="text"
-                inputmode="numeric"
-                maxlength="1"
-                value={digit}
-                bind:this={inputs[i]}
-                on:input={(e) => onInput(i, e)}
-                on:keydown={(e) => onKeydown(i, e)}
-                class="ov-otp-box"
-                class:ov-otp-filled={digit !== ''}
-                class:ov-otp-error={errors.otp}
-                disabled={isLoading}
-                aria-label="Digit {i + 1} of 6"
-              />
-            {/each}
-          </div>
+         <!-- OTP input boxes -->
+<div class="ov-otp-row" onpaste={onPaste}>
+  {#each digits as digit, i}
+    <input
+      type="text"
+      inputmode="numeric"
+      maxlength="1"
+      value={digit}
+      bind:this={inputs[i]}
+      oninput={(e) => onInput(i, e)}
+      onkeydown={(e) => onKeydown(i, e)}
+      class="ov-otp-box"
+      class:ov-otp-filled={digit !== ''}
+      class:ov-otp-error={errors.otp}
+      disabled={isLoading}
+      aria-label="Digit {i + 1} of 6"
+    />
+  {/each}
+</div>
 
           <p class="ov-otp-hint">Enter each digit — auto-submits when complete</p>
 
