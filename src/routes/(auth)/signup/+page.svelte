@@ -542,8 +542,8 @@ async function handleQrUpload(e: Event) {
 										type="text"
 										id="university"
 										bind:value={searchQuery}
-										on:focus={() => (showDropdown = true)}
-										on:input={() => (showDropdown = true)}
+										onfocus={() => (showDropdown = true)}
+										oninput={() => (showDropdown = true)}
 										placeholder="Search for your university…"
 										class="si-input"
 										autocomplete="off"
@@ -612,7 +612,7 @@ async function handleQrUpload(e: Event) {
 										<input
 											type="text"
 											bind:value={mouauMatric}
-											on:input={onMatricInput}
+											oninput={onMatricInput}
 											placeholder="e.g. 2021/249011"
 											class="si-input"
 										/>
@@ -674,7 +674,7 @@ async function handleQrUpload(e: Event) {
 										<input
 											type={refMasked ? 'password' : 'text'}
 											value={refMasked ? '••••••••••••' : refNumber}
-											on:input={(e) => {
+											oninput={(e) => {
 												refNumber = (e.target as HTMLInputElement).value;
 												onRefInput();
 											}}

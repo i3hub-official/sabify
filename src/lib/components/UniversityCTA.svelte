@@ -89,8 +89,8 @@
           <input
             type="text"
             bind:value={searchQuery}
-            on:focus={() => (showDropdown = true)}
-            on:input={() => (showDropdown = true)}
+            onfocus={() => (showDropdown = true)}
+            oninput={() => (showDropdown = true)}
             placeholder="Search for your university…"
             class="form-input"
             autocomplete="off"
