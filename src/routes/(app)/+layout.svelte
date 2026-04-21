@@ -2,7 +2,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { authClient } from '$lib/auth-client';
+  import { authClient } from '../../../auth-client'; // root/auth-client.ts
   import { authStore } from '$lib/stores/auth';
   import {
     LayoutDashboard, BookOpen, FileQuestion, Library,
