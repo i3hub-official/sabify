@@ -200,63 +200,67 @@ function extractRef(raw: string): string {
 	// ─── MOUAU receipt fetch ──────────────────────────────────────────
 	// fromScan: when true, auto-advances to step 2 on success and never
 	// shows the raw ref to the user
-	async function fetchReceipt(fromScan = false) {
-		if (!mouauMatric.trim()) {
-			errorMessage = 'Please enter your matric number first.';
-			return;
-		}
-		const ref = extractRef(refNumber.trim());
-		if (!ref) {
-			errorMessage = 'Please enter or scan the receipt ref number.';
-			return;
-		}
+async function fetchReceipt(fromScan = false) {
+    if (!mouauMatric.trim()) {
+        errorMessage = 'Please enter your matric number first.';
+        return;
+    }
+    const ref = extractRef(refNumber.trim());
+    if (!ref) {
+        errorMessage = 'Please enter or scan the receipt ref number.';
+        return;
+    }
 
-		qrLoading = true;
-		receiptData = null;
-		errorMessage = '';
+    qrLoading = true;
+    receiptData = null;
+    errorMessage = '';
 
-		// Mask the ref field immediately so the raw value is never visible
-		if (fromScan) refMasked = true;
+    if (fromScan) refMasked = true;
 
-		try {
-			const res = await fetch(`/api/receipt?ref=${encodeURIComponent(ref)}`);
-			if (!res.ok) throw new Error('Failed');
-			const data = await res.json();
+    try {
+        const res = await fetch(`/api/get-data?ref=${encodeURIComponent(ref)}`);
+        const data = await res.json();
 
-			if (
-				data.matricNo &&
-				!data.matricNo.replace(/\//g, '').includes(mouauMatric.replace(/\//g, '').trim())
-			) {
-				errorMessage = 'Matric number does not match this receipt. Please check and try again.';
-				refMasked = false;
-				return;
-			}
+        if (!res.ok) {
+            errorMessage = data.error ?? 'Could not fetch student data. Check the ref number and try again.';
+            refMasked = false;
+            return;
+        }
 
-			receiptData = data;
-			receiptFetched = true;
+        if (
+            data.matricNo &&
+            !data.matricNo.replace(/\//g, '').includes(mouauMatric.replace(/\//g, '').trim())
+        ) {
+            errorMessage = 'Matric number does not match this receipt. Please check and try again.';
+            refMasked = false;
+            return;
+        }
 
-			if (data.name) {
-				const parts = (data.name as string).trim().split(/\s+/);
-				surname = parts.slice(2).join(' ');
-				firstName = parts[0] ?? '';
-				otherName = parts[1] ?? '';
-			}
-			if (data.matricNo) matricNumber = data.matricNo;
-			if (data.jambregNo) jambregNo = data.jambregNo;
-			if (data.college) faculty = data.college;
-			if (data.department) department = data.department;
+        receiptData = data;
+        receiptFetched = true;
 
-			// Auto-advance only when triggered by QR scan (camera or gallery)
-			if (fromScan) {
-				currentStep = 2;
-			}
-		} catch {
-			errorMessage = 'Could not fetch receipt. Check the ref number and try again.';
-			refMasked = false;
-		} finally {
-			qrLoading = false;
-		}
-	}
+        if (data.name) {
+            const parts = (data.name as string).trim().split(/\s+/);
+            // MOUAU name format is: FIRSTNAME OTHERNAME SURNAME
+            firstName = parts[0] ?? '';
+            otherName = parts[1] ?? '';
+            surname   = parts.slice(2).join(' ');
+        }
+        if (data.matricNo)   matricNumber = data.matricNo;
+        if (data.jambregNo)  jambregNo    = data.jambregNo;
+        if (data.college)    faculty      = data.college;
+        if (data.department) department   = data.department;
+
+        if (fromScan) currentStep = 2;
+
+    } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Network error';
+        errorMessage = message;
+        refMasked = false;
+    } finally {
+        qrLoading = false;
+    }
+}
 
 	// ─── QR from gallery upload ───────────────────────────────────────
 // ─── QR from gallery upload ───────────────────────────────────────
