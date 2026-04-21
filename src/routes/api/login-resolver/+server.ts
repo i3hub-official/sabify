@@ -1,6 +1,11 @@
+// src/routes/api/login-resolver/+server.ts
+
+// 'db' is declared but its value is never read.ts(6133)
+// Cannot find module '$lib/server/db' or its corresponding type declarations.ts(2307)
+
+
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { db } from '$lib/server/db';
 
 export const POST: RequestHandler = async ({ request }) => {
   let body: { identifier?: string };
@@ -14,8 +19,8 @@ export const POST: RequestHandler = async ({ request }) => {
   if (!identifier) throw error(400, 'identifier is required');
 
   // Determine type
-  const isEmail = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(identifier);
-  const isPhone = /^[\+]?[\d\s\-().]{7,15}$/.test(identifier);
+const isEmail = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(identifier);
+const isPhone = /^[\+]?[\d\s\-().]{7,15}$/.test(identifier);
 
   let user: { email: string } | null = null;
 

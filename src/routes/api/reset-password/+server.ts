@@ -1,6 +1,8 @@
+// src/routes/api/reset-password/+server.ts
+
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { auth } from '$lib/server/auth';
+import { auth } from '../../../../auth';  // root/auth.ts
 
 export const POST: RequestHandler = async ({ request }) => {
   let body: { token?: string; password?: string };
