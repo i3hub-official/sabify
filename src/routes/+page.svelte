@@ -6,7 +6,7 @@
     BookOpen, FileText, ClipboardList, CreditCard, QrCode,
     Bell, Footprints, Calendar, Megaphone, Layers,
     ArrowRight, File, DollarSign, AlertTriangle,
-    Library, Building2, GraduationCap, Sparkles, ShieldCheck, Zap
+    Library, Building2, GraduationCap, Sparkles
   } from 'lucide-svelte';
   import UniversityCTA from '$lib/components/UniversityCTA.svelte';
 
